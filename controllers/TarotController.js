@@ -1,6 +1,7 @@
+// TarotController.js
 const TarotService = require('../services/TarotService');
+const mongoose = require('mongoose'); // Mongoose 모듈을 추가
 
-// 타로 읽기 결과를 생성하고 반환하는 컨트롤러 함수
 exports.createTarotReading = async (req, res) => {
     try {
         if (!req.body.userId) {
