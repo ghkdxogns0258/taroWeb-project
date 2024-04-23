@@ -1,11 +1,13 @@
-// threeCards.js
-// 과거, 현재, 미래에 대한 카드를 뽑고 각 카드의 의미를 반환합니다.
+const { performReading } = require('./services/TarotService'); 
+const Card = require('./model/Card'); 
 
-const { performReading } = require('./TarotService');
-const Card = require('./model/Card');
 
-exports.getThreeCards = async () => {
-    const cards = await Card.aggregate([{ $sample: { size: 3 } }]);  // 세 개의 카드를 무작위로 선택
+exports.getThreeCards = async (reverse = false) => { // 역방향 여부를 매개변수로 추가합니다.
+    const cards = await Card.aggregate([
+        { $match: { type: 'major' } },  // 메이저 타입의 카드만 필터링
+        { $sample: { size: 3 } }
+    ]);
 
-    return Promise.all(cards.map(card => performReading(card.name)));
+    // 역방향 선택 여부를 performReading 함수에 전달합니다.
+    return Promise.all(cards.map(card => performReading(card.name, reverse))); 
 };
