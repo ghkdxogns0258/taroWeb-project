@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>타로 카드 뽑기</title>
+    <style>
+        body {
+            background-color: #232d32;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 90vw;
+            max-width: 600px;
+            padding: 20px;
+            text-align: center;
+            overflow-y: auto; /* 세로 스크롤 추가 */
+        }
+        .card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 0;
+        }
+        .card div {
+            cursor: pointer;
+            background: #574b8b;
+            background-image: url("card_backside.jpg");
+            background-size: contain;
+            width: 50px; /* 카드 크기 조정 */
+            height: 70px; /* 카드 크기 조정 */
+            border-radius: 5px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, margin-top 0.3s ease; /* 애니메이션 효과 추가 */
+            margin: 5px; /* 카드 간격 조정 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0; /* 초기에 투명 상태로 설정 */
+            transform: translateY(-50px); /* 초기에 위로 이동한 상태로 설정 */
+        }
+        .container .card {
+            margin-top: 20px; /* 상단 여백 */
+            margin-bottom: 20px; /* 하단 여백 */
+        }
+        .card .selected {
+            animation: cardSelected 0.5s ease forwards;
+            box-shadow: 0 0 10px 5px #6600ff; /* 선택된 상태 그림자 효과 */
+        }
+        .submit {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .submit button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+        }
+        /* 애니메이션 효과 추가 */
+        @keyframes cardSelected {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card" id="card-box">
+            <!-- 카드 레이블들 -->
+        </div>
+
+        <div class="submit">
+            <button id="draw-card-button">결과 확인</button>
+        </div>
+
+        <div>
+            <button id="major-button">메이저만 사용</button>
+            <button id="major-minor-button">메이저와 마이너 모두 사용</button>
+        </div>
+
+        <div>
+            <button id="one-card-button">원 카드</button>
+            <button id="three-cards-button">쓰리 카드</button>
+            <button id="four-cards-button">포 카드</button>
+            <button id="five-cards-button">파이브 카드</button>
+        </div>
+
+        <form id="card-form" action="taroresult.html" method="get">
+            <input type="hidden" id="selected-cards" name="selected-cards">
+        </form>
+    </div>
+
+    <script>
+        // 결과 확인 버튼 이벤트 처리
+        document.getElementById("draw-card-button").addEventListener("click", function() {
+            const selectedDivs = document.querySelectorAll(".card .selected");
+            
+            // 선택된 카드에 애니메이션 클래스 추가
+            selectedDivs.forEach(div => div.classList.add("card-animation"));
+
+            const selectedCardNames = Array.from(selectedDivs).map((div, index) => "카드" + (index + 1));
+            const selectedCardString = selectedCardNames.join(", ");
+
+            // 선택된 카드들을 hidden input에 설정
+            document.getElementById("selected-cards").value = selectedCardString;
+
+            // 결과 확인 페이지로 이동
+            document.getElementById("card-form").submit();
+        });
+
+        // 카드 레이블 생성 및 추가
+        const cardBox = document.getElementById("card-box");
+        
+        // 카드 클릭 이벤트 처리
+        cardBox.addEventListener("click", function(event) {
+            const target = event.target;
+            if (target.tagName === "DIV") {
+                target.classList.toggle("selected");
+            }
+        });
+
+        // 메이저만 사용 버튼 이벤트 처리
+        document.getElementById("major-button").addEventListener("click", function() {
+            cardBox.innerHTML = ""; // 기존 카드 삭제
+            
+            // 카드 생성 및 애니메이션 적용
+            for (let i = 0; i < 22; i++) {
+                const div = document.createElement("div");
+                cardBox.appendChild(div);
+                setTimeout(() => {
+                    div.style.opacity = 1;
+                    div.style.transform = "translateY(0)";
+                }, i * 50); // 각 카드가 0.05초 간격으로 나타남
+            }
+        });
+
+        // 메이저와 마이너 모두 사용 버튼 이벤트 처리
+        document.getElementById("major-minor-button").addEventListener("click", function() {
+            cardBox.innerHTML = ""; // 기존 카드 삭제
+            
+            // 카드 생성 및 애니메이션 적용
+            for (let i = 0; i < 78; i++) {
+                const div = document.createElement("div");
+                cardBox.appendChild(div);
+                setTimeout(() => {
+                    div.style.opacity = 1;
+                    div.style.transform = "translateY(0)";
+                }, i * 20); // 각 카드가 0.02초 간격으로 나타남
+            }
+        });
+
+        // 카드 수 선택 버튼 이벤트 처리
+        document.getElementById("one-card-button").addEventListener("click", function() {
+            selectCards(1);
+        });
+
+        document.getElementById("three-cards-button").addEventListener("click", function() {
+            selectCards(3);
+        });
+
+        document.getElementById("four-cards-button").addEventListener("click", function() {
+            selectCards(4);
+        });
+
+        document.getElementById("five-cards-button").addEventListener("click", function() {
+            selectCards(5);
+        });
+
+        // 카드 선택 함수
+        function selectCards(numOfCards) {
+            const selectedDivs = document.querySelectorAll(".card .selected");
+            // 선택된 카드가 이미 있다면 초기화
+            selectedDivs.forEach(div => div.classList.remove("selected"));
+
+            // 무작위로 카드 선택
+            const divs = document.querySelectorAll(".card div");
+            const selectedIndices = [];
+            while (selectedIndices.length < numOfCards) {
+                const index = Math.floor(Math.random() * divs.length);
+                if (!selectedIndices.includes(index)) {
+                    selectedIndices.push(index);
+                }
+            }
+
+            // 선택된 카드에 selected 클래스 추가
+            selectedIndices.forEach(index => {
+                divs[index].classList.add("selected");
+            });
+        }
+    </script>
+</body>
+</html>
