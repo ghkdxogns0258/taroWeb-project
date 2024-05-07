@@ -1,5 +1,6 @@
-const { performReading } = require('./TarotService');
-const Card = require('./model/Card');
+const { performReading } = require('./services/TarotService'); 
+const Card = require('./model/Card'); 
+
 
 exports.getFiveCards = async (reverse = false) => { // 역방향 여부를 매개변수로 추가합니다.
     const cards = await Card.aggregate([
