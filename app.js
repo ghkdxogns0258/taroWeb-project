@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 const path = require('path');
+const bodyParser = require('body-parser');
 const readingRoutes = require('./routes/readingRoutes');
 const userRoutes = require('./routes/userRoutes');
 
@@ -9,9 +10,12 @@ const app = express();
 app.use(helmet());  // 보안 헤더 설정
 app.use(cors());    // CORS 정책을 설정하여 다양한 출처에서의 접근을 허용
 app.use(express.json());  // JSON 형식의 요청 본문을 파싱
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // 정적 파일 라우트 설정
 app.use(express.static(path.join(__dirname, 'view')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/',(req,res)=>{
     res.sendfile(__dirname+'/view/start.html')
