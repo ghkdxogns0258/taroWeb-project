@@ -5,11 +5,10 @@ const User = require('../model/User');
 exports.createUser = async (req, res) => {
     try {
         const newUser = new User({
-            name: req.body.name,
             birthdate: req.body.birthdate,
             gender: req.body.gender,
+            name: req.body.name,
             mbti: req.body.mbti,
-            readingType: req.body.readingType
         });
         await newUser.save();
         res.status(201).send({ message: "User created successfully", user: newUser });

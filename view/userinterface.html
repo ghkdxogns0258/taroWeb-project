@@ -1,3 +1,4 @@
+<!--userinterface.html-->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -87,10 +88,12 @@
 <body>
     <div class="container">
         <h2>사용자 정보 입력</h2>
-        <form action="taromain.html" method="post">
+        <!-- action을 백엔드 라우트로 설정 -->
+        <form action="/api/users" method="post">
             <div class="form-group">
-                <label for="age">나이 (YYYYMMDD 형식으로 입력)</label>
-                <input type="text" id="age" name="age" maxlength="8" pattern="\d{8}" title="ex)20010101" placeholder="ex)20010101" required>
+                <label for="birthdate">생년월일 (YYYYMMDD)</label>
+                <!-- name 속성을 백엔드 모델과 일치하게 설정 -->
+                <input type="text" id="birthdate" name="birthdate" maxlength="8" pattern="\d{8}" title="ex)20010101" placeholder="ex)20010101" required>
             </div>
             <div class="form-group">
                 <label>성별</label>
@@ -124,10 +127,6 @@
                     <option value="ENTJ">ENTJ</option>
                 </select>
                 <a href="https://www.16personalities.com/ko/%EB%AC%B4%EB%A3%8C-%EC%84%B1%EA%B2%A9-%EC%9C%A0%ED%98%95-%EA%B2%80%EC%82%AC" target="_blank" class="mbti-test-button">MBTI 검사</a>
-            </div>
-            <div class="form-group">
-                <label for="request">원하는 점괘 내용</label>
-                <textarea id="request" name="request" rows="4" placeholder="원하시는 점괘를 작성해주세요"></textarea>
             </div>
             <button type="submit" class="submit-button">제출하기</button>
         </form>

@@ -1,4 +1,4 @@
-const { performReading } = require('./services/TarotService'); 
+const { performReading } = require('./controllers/TarotController'); 
 const Card = require('./model/Card'); 
 
 

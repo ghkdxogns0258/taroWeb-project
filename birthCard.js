@@ -1,4 +1,4 @@
-const { performReading } = require('./services/TarotService'); 
+const { performReading } = require('./controllers/TarotController'); 
 const Card = require('./model/Card'); 
 
 exports.getBirthCard = async (user, reverse = false) => { // 역방향 여부를 매개변수로 추가합니다.
