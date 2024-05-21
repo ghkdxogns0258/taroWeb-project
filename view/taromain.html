@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>타로 점 선택</title>
+    <link rel="stylesheet" type="text/css" href="public/css/taromain_styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2 style="color: #FFA500;">타로 점 선택</h2>''''
+        <div class="button-group">
+            <button id="one-card-button" data-card-limit="1">원카드</button>
+            <button id="three-cards-button" data-card-limit="3">쓰리카드</button>
+            <button id="four-cards-button" data-card-limit="4">포카드</button>
+            <button id="five-cards-button" data-card-limit="5">파이브카드</button>
+        </div>
+        <div class="button-group">
+            <button id="reverse-button">역방향 키기/끄기</button>
+            <button id="major-minor-button">메이저와 마이너 모두 사용</button>
+        </div>
+        <div id="selected-card-info"></div>
+        <form id="card-form" action="pickcard.html" method="post">
+            <input type="hidden" id="selected-card" name="selected-card">
+            <input type="hidden" id="selected-card-type" name="selected-card-type">
+            <button id="draw-card-button" type="submit"></button>
+        </form>
+    </div>
+    <script src="public/script/taromain_scripts.js"></script>
+</body>
+</html>

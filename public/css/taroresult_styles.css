@@ -1,0 +1,193 @@
+body {
+    background-color: #232d32;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto; /* 중앙 정렬 */
+    display: flex;
+    flex-direction: row-reverse; /* 좌우 반전 */
+}
+
+.left-container {
+    flex: 1; /* 좌측 컨테이너 너비를 21 중 1로 설정 */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.right-container {
+    flex: 2; /* 우측 컨테이너 너비를 2:1 중 2로 조정 */
+    background-image: url('./image2/타로 배경/taro_background.jpg'); /* 이미지 경로 설정 */
+    background-size: cover; /* 배경 이미지를 컨테이너에 맞게 확대/축소 */
+    background-position: center; /* 배경 이미지를 가운데 정렬 */
+    background-repeat: no-repeat; /* 배경 이미지 반복 방지 */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-top: 0;
+    color: orange; /* 주황색으로 변경 */
+}
+
+.button-group {
+    text-align: right; /* 버튼 그룹을 우측 정렬 */
+    margin-top: 20px;
+}
+
+.button-group button {
+    display: block; /* 버튼을 블록 요소로 설정하여 위에서 아래로 배치 */
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px; /* 버튼 사이 간격 조정 */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    position: relative; /* 상대적 위치 지정 */
+}
+
+.button-group button:last-child {
+    margin-bottom: 0; /* 마지막 버튼의 하단 여백 제거 */
+}
+
+.button-group button:hover {
+    background-color: #0056b3;
+}
+
+.button-group .active-label {
+    position: absolute; /* 절대 위치 지정 */
+    right: 10px; /* 오른쪽 여백 조정 */
+    top: 50%; /* 상단 정렬 */
+    transform: translateY(-50%); /* 세로 중앙 정렬 */
+    font-size: 12px;
+    color: green; /* 활성화 색상 지정 */
+}
+
+/* 역방향 체크박스 */
+.checkbox.reverse-checkbox {
+    position: fixed; /* 고정 위치 */
+    right: 30px; /* 오른쪽 여백 조정 */
+    bottom: 30px; /* 하단 여백 조정 */
+    color: white;
+    transform: translateY(50%); /* 세로 중앙 정렬 */
+}
+
+/* 메이저/마이너 체크박스 */
+.checkbox.major-minor-checkbox {
+    position: fixed; /* 고정 위치 */
+    right: 30px; /* 오른쪽 여백 조정 */
+    bottom: 10px; /* 하단 여백 조정 */
+    color: white;
+    transform: translateY(50%); /* 세로 중앙 정렬 */
+}
+
+
+
+#save-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+}
+
+#save-button:hover {
+    background-color: #0056b3;
+}
+
+/* 카드 이미지 스타일 */
+.card {
+    max-width: 100px; /* 카드 이미지의 최대 너비를 조정 */
+    height: auto; /* 높이 자동 조정 */
+    margin-right: 10px; /* 각 카드 이미지 사이의 간격을 조정 */
+}
+
+/* 카드 컨테이너 스타일 */
+#card-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* 점괘 내용을 숨기는 클래스 */
+.hidden {
+    display: none;
+}
+
+/* 카드가 뒤집힌 상태의 스타일 */
+.card.reversed {
+    transform: scaleY(-1); /* 위 아래로 뒤집기 */
+}
+
+/* 점괘 보기 모달 창 스타일 */
+.modal {
+    display: none; /* 기본적으로는 보이지 않음 */
+    position: fixed; /* 고정 위치 */
+    z-index: 1; /* 화면 최상위에 표시 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* 모달 내용이 넘칠 경우 스크롤 가능하도록 설정 */
+    background-color: rgba(0,0,0,0.8); /* 반투명한 검은 배경 */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 중앙 정렬 */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    animation-name: modalopen; /* 모달 창이 열릴 때 애니메이션 적용 */
+    animation-duration: 0.5s;
+}
+
+/* 모달 창이 열릴 때 애니메이션 */
+@keyframes modalopen {
+    from {opacity: 0}
+    to {opacity: 1}
+}
+
+/* 닫기 버튼 스타일 */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 복사하기 버튼 스타일 */
+#copy-button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+#copy-button:hover {
+    background-color: #45a049;
+}
