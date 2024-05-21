@@ -4,9 +4,9 @@ const User = require('../model/User');
 // 사용자 정보를 생성하는 컨트롤러 함수
 exports.createUser = async (req, res) => {
     try {
-        const { birthdate, gender, name, mbti } = req.body;
+        const { birthdate, gender, name, mbti,fortune } = req.body;
 
-        if (!birthdate || !gender || !name || !mbti) {
+        if (!birthdate || !gender || !name || !mbti|| !fortune) {
             return res.status(400).send({ 
                 message: "Failed to create user", 
                 error: "All fields are required" 
@@ -17,7 +17,8 @@ exports.createUser = async (req, res) => {
             birthdate,
             gender,
             name,
-            mbti
+            mbti,
+            fortune
         });
 
         await newUser.save();

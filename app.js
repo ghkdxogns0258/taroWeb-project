@@ -13,9 +13,20 @@ app.use(express.json());  // JSON 형식의 요청 본문을 파싱
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// 정적 파일 라우트 설정
 app.use(express.static(path.join(__dirname, 'view')));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public'), {
+  setHeaders: function (res, path, stat) {
+    if (path.endsWith('.css')) {
+      res.set('Content-Type', 'text/css');
+    }
+  }
+}));
+
+// POST 요청을 처리하는 라우트 추가
+app.post('/pickcard.html', (req, res) => {
+    console.log(req.body);
+    res.sendFile(path.join(__dirname, 'view/pickcard.html'));
+});
 
 app.get('/',(req,res)=>{
     res.sendfile(__dirname+'/view/start.html')
