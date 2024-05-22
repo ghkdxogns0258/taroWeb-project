@@ -22,17 +22,12 @@ app.use('/public', express.static(path.join(__dirname, 'public'), {
   }
 }));
 
-// POST 요청을 처리하는 라우트 추가
-app.post('/pickcard.html', (req, res) => {
-    console.log(req.body);
-    res.sendFile(path.join(__dirname, 'view/pickcard.html'));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'view', 'start.html'));
 });
 
-app.get('/',(req,res)=>{
-    res.sendfile(__dirname+'/view/start.html')
-})
 // API 라우트 설정
-app.use('/reading', readingRoutes); // '/reading' 경로에 대한 라우트를 설정
-app.use('/api', userRoutes);  // '/api' 경로에 대한 라우트를 설정
+app.use('/api/tarot', readingRoutes); // '/api/tarot' 경로에 대한 라우트를 설정
+app.use('/api', userRoutes);  // '/api/users' 경로에 대한 라우트를 설정
 
 module.exports = app;  // app 모듈을 내보냄, 다른 파일에서 사용 가능

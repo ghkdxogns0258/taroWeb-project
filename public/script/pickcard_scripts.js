@@ -11,18 +11,12 @@ window.onload = function() {
 // 결과 확인 버튼 이벤트 처리
 document.getElementById("draw-card-button").addEventListener("click", function() {
     const selectedDivs = document.querySelectorAll(".card .selected");
-    
+
     // 선택된 카드에 애니메이션 클래스 추가
     selectedDivs.forEach(div => div.classList.add("card-animation"));
+     // 결과 확인 페이지로 이동
+     window.location.href = 'taroresult.html';
 
-    const selectedCardNames = Array.from(selectedDivs).map((div, index) => "카드" + (index + 1));
-    const selectedCardString = selectedCardNames.join(", ");
-
-    // 선택된 카드들을 hidden input에 설정
-    document.getElementById("selected-cards").value = selectedCardString;
-
-    // 결과 확인 페이지로 이동
-    document.getElementById("card-form").submit();
 });
 
 // 카드 레이블 생성 및 추가

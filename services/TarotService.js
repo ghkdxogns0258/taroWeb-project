@@ -1,21 +1,39 @@
-const User = require('../model/User'); // User 모델을 불러옵니다.
-const TarotAPI = require('../integration/TarotAPI'); // TarotAPI 인티그레이션을 불러옵니다.
-const Card = require('../model/Card'); // Card 모델을 불러옵니다.
+// TarotService.js
+const User = require('../model/User');
+const TarotAPI = require('../integration/TarotAPI');
 
-// 사용자 ID로 사용자를 찾고 타로 읽기를 수행하는 함수
-exports.performReading = async (userId, reverse = false) => { // 역방향 여부를 매개변수로 추가합니다.
+// 타로 읽기를 수행하는 함수
+exports.performReading = async (userId, selectedCard, reverse = false, majorMinor = "both") => {
+  try {
     const user = await User.findById(userId);
-    if (!user) throw new Error('User not found'); // 사용자를 찾을 수 없으면 에러 발생
-    const card = await Card.aggregate([
-        { $sample: { size: 1 } },
-        { $addFields: { reversed: reverse ? { $rand: { output: [true, false] } } : false } } // 역방향 확률 추가
-    ]).toArray();
-    const direction = card[0].reversed ? 'reversed' : 'upright'; // 카드 방향 결정
-    const prompt = createPrompt(user, card[0].name, direction); // 프롬프트 생성
-    return await TarotAPI.getReading(prompt); // TarotAPI를 통해 읽기 결과 가져오기
+    if (!user) throw new Error('User not found');
+
+    const direction = reverse ? 'reversed' : 'upright';
+    const prompt = createPrompt(user, selectedCard, direction, majorMinor);
+
+    return await TarotAPI.getReading(prompt);
+  } catch (error) {
+    console.error('Error in performReading:', error);
+    throw error;
+  }
 };
 
-// 사용자 정보와 카드 정보를 바탕으로 ChatGPT 프롬프트 문자열을 생성합니다.
-function createPrompt(user, cardName, direction) {
-    return `Tarot reading for ${user.name}, born on ${user.birthdate}, card: ${cardName}, direction: ${direction}`;
+// 사용자 정보와 카드 정보를 바탕으로 ChatGPT 프롬프트 문자열을 생성하는 함수
+function createPrompt(user, cardName, direction, majorMinor) {
+  return `
+  Perform a tarot reading for the following user:
+
+  - Name: ${user.name}
+  - Birthdate: ${user.birthdate}
+  - Gender: ${user.gender}
+  - MBTI: ${user.mbti}
+  - Fortune type: ${user.fortune}
+  - Tarot selection: ${user.tarotSelection}
+  - Card: ${cardName}
+  - Direction: ${direction}
+  - Major/Minor: ${majorMinor}
+
+  Considering the user's MBTI type (${user.mbti}), provide a personalized tarot reading interpretation. 
+  Explain how the card's meaning might be particularly relevant or interpreted for someone with this MBTI type.
+  `;
 }

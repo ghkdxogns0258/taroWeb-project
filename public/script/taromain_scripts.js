@@ -12,157 +12,221 @@ let majorMinorMode = "both";  // 기본값을 both로 설정
 
 // 페이지 로드 시 초기화 함수
 window.onload = function() {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-        document.getElementById('user-id').value = userId;
+    const userId = localStorage.getItem('userId');  // 로컬 스토리지에서 userId를 가져옴
+    if (userId) {  // userId가 존재하면
+        document.getElementById('user-id').value = userId;  // hidden input에 userId 설정
     }
-    hideReverseButton();
-    hideMajorMinorButton();
+    hideReverseButton();  // 역방향 버튼 숨김
+    hideMajorMinorButton();  // 메이저와 마이너 버튼 숨김
 };
 
-// 버튼 클릭 이벤트 처리
+// 카드 선택 버튼 클릭 이벤트 처리
 document.getElementById("one-card-button").addEventListener("click", function() {
-    selectedCardCount = 1; // 원 카드 선택 시 1장
-    selectedCard = "one-card";
-    updateSelectedCardInfo();
-    showDrawCardButton();
-    showReverseButton(); // 역방향 버튼 보이기
-    hideMajorMinorButton(); // 메이저와 마이너 버튼 숨기기
-    updateButtonOpacity(this); // 선택된 버튼의 투명도 조절
-    resetOtherButtonOpacity(this); // 다른 버튼의 투명도 초기화
+    selectedCardCount = 1;  // 원 카드 선택 시 1장
+    selectedCard = getRandomCard(majorMinorMode !== "major");  // 랜덤 카드 선택
+    updateSelectedCardInfo();  // 선택된 카드 정보 업데이트
+    showDrawCardButton();  // 카드 뽑기 버튼 표시
+    showReverseButton();  // 역방향 버튼 보이기
+    hideMajorMinorButton();  // 메이저와 마이너 버튼 숨기기
+    updateButtonOpacity(this);  // 선택된 버튼의 투명도 조절
+    resetOtherButtonOpacity(this);  // 다른 버튼의 투명도 초기화
 });
 
 document.getElementById("three-cards-button").addEventListener("click", function() {
-    selectedCardCount = 3; // 쓰리 카드 선택 시 3장
-    selectedCard = "three-cards";
-    updateSelectedCardInfo();
-    showDrawCardButton();
-    showReverseButton(); // 역방향 버튼 보이기
-    hideMajorMinorButton(); // 메이저와 마이너 버튼 숨기기
-    updateButtonOpacity(this); // 선택된 버튼의 투명도 조절
-    resetOtherButtonOpacity(this); // 다른 버튼의 투명도 초기화
+    selectedCardCount = 3;  // 쓰리 카드 선택 시 3장
+    selectedCard = getRandomCard(majorMinorMode !== "major");  // 랜덤 카드 선택
+    updateSelectedCardInfo();  // 선택된 카드 정보 업데이트
+    showDrawCardButton();  // 카드 뽑기 버튼 표시
+    showReverseButton();  // 역방향 버튼 보이기
+    hideMajorMinorButton();  // 메이저와 마이너 버튼 숨기기
+    updateButtonOpacity(this);  // 선택된 버튼의 투명도 조절
+    resetOtherButtonOpacity(this);  // 다른 버튼의 투명도 초기화
 });
 
 document.getElementById("four-cards-button").addEventListener("click", function() {
-    selectedCardCount = 4; // 포 카드 선택 시 4장
-    selectedCard = "four-cards";
-    updateSelectedCardInfo();
-    showDrawCardButton();
-    showReverseButton(); // 역방향 버튼 보이기
-    showMajorMinorButton(); // 메이저와 마이너 버튼 보이기
-    updateButtonOpacity(this); // 선택된 버튼의 투명도 조절
-    resetOtherButtonOpacity(this); // 다른 버튼의 투명도 초기화
+    selectedCardCount = 4;  // 포 카드 선택 시 4장
+    selectedCard = getRandomCard(majorMinorMode !== "major");  // 랜덤 카드 선택
+    updateSelectedCardInfo();  // 선택된 카드 정보 업데이트
+    showDrawCardButton();  // 카드 뽑기 버튼 표시
+    showReverseButton();  // 역방향 버튼 보이기
+    showMajorMinorButton();  // 메이저와 마이너 버튼 보이기
+    updateButtonOpacity(this);  // 선택된 버튼의 투명도 조절
+    resetOtherButtonOpacity(this);  // 다른 버튼의 투명도 초기화
 });
 
 document.getElementById("five-cards-button").addEventListener("click", function() {
-    selectedCardCount = 5; // 파이브 카드 선택 시 5장
-    selectedCard = "five-cards";
-    updateSelectedCardInfo();
-    showDrawCardButton();
-    showReverseButton(); // 역방향 버튼 보이기
-    showMajorMinorButton(); // 메이저와 마이너 버튼 보이기
-    updateButtonOpacity(this); // 선택된 버튼의 투명도 조절
-    resetOtherButtonOpacity(this); // 다른 버튼의 투명도 초기화
+    selectedCardCount = 5;  // 파이브 카드 선택 시 5장
+    selectedCard = getRandomCard(majorMinorMode !== "major");  // 랜덤 카드 선택
+    updateSelectedCardInfo();  // 선택된 카드 정보 업데이트
+    showDrawCardButton();  // 카드 뽑기 버튼 표시
+    showReverseButton();  // 역방향 버튼 보이기
+    showMajorMinorButton();  // 메이저와 마이너 버튼 보이기
+    updateButtonOpacity(this);  // 선택된 버튼의 투명도 조절
+    resetOtherButtonOpacity(this);  // 다른 버튼의 투명도 초기화
 });
 
 document.getElementById("reverse-button").addEventListener("click", function() {
     const button = document.getElementById("reverse-button");
-    reverseMode = !reverseMode;
-    button.classList.toggle("active"); // 활성/비활성 클래스 토글
-    updateSelectedCardInfo();
-    updateReverseButtonOpacity(); // 역방향 버튼의 투명도만 업데이트
+    reverseMode = !reverseMode;  // 역방향 모드 토글
+    button.classList.toggle("active");  // 활성/비활성 클래스 토글
+    updateSelectedCardInfo();  // 선택된 카드 정보 업데이트
+    updateReverseButtonOpacity();  // 역방향 버튼의 투명도만 업데이트
 });
 
 document.getElementById("major-minor-button").addEventListener("click", function() {
     const button = document.getElementById("major-minor-button");
-    majorMinorMode = majorMinorMode === "both" ? "major" : "both";
-    button.classList.toggle("active"); // 활성/비활성 클래스 토글
-    updateSelectedCardInfo();
-    updateMajorMinorButtonOpacity(); // 메이저/마이너 버튼의 투명도만 업데이트
+    majorMinorMode = majorMinorMode === "both" ? "major" : "both";  // 메이저/마이너 모드 토글
+    button.classList.toggle("active");  // 활성/비활성 클래스 토글
+    updateSelectedCardInfo();  // 선택된 카드 정보 업데이트
+    updateMajorMinorButtonOpacity();  // 메이저/마이너 버튼의 투명도만 업데이트
 });
 
-document.getElementById("draw-card-button").addEventListener("click", function() {
+// 결과 확인 버튼 이벤트 처리
+document.getElementById("draw-card-button").addEventListener("click", function(event) {
+    event.preventDefault(); // 기본 폼 제출 동작을 막음
+
     // 선택된 타로 정보를 hidden input에 설정
     document.getElementById("selected-card").value = selectedCard;
     document.getElementById("selected-card-type").value = reverseMode;
     document.getElementById("major-minor").value = majorMinorMode;
-    document.getElementById("tarot-form").submit(); // 폼 제출
+
+    // 서버에 데이터 전송
+    const formData = new FormData(document.getElementById("tarot-form"));
+    const data = {};
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+
+    // 사용자 타로 정보를 먼저 업데이트
+    fetch('/api/users/tarot', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.message === "User tarot info updated successfully") {
+            // 타로 결과 요청
+            return fetch('/api/tarot/reading', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+        } else {
+            throw new Error(result.error);
+        }
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.reading) {
+            localStorage.setItem('tarotReading', result.reading); // 타로 결과를 로컬 스토리지에 저장
+            window.location.href = 'pickcard.html';
+        } else {
+            alert('타로 정보를 저장하는데 실패했습니다: ' + result.error);
+        }
+    })
+    .catch(error => {
+        alert('서버 오류: ' + error);
+    });
 });
 
-// 역방향 버튼을 숨기는 함수
+
 function hideReverseButton() {
-    document.getElementById("reverse-button").style.display = "none";
+    document.getElementById("reverse-button").style.display = "none";  // 역방향 버튼 숨기기
 }
 
-// 역방향 버튼을 보이는 함수
 function showReverseButton() {
-    document.getElementById("reverse-button").style.display = "block";
+    document.getElementById("reverse-button").style.display = "block";  // 역방향 버튼 보이기
 }
 
-// 메이저와 마이너 버튼을 숨기는 함수
 function hideMajorMinorButton() {
-    document.getElementById("major-minor-button").style.display = "none";
+    document.getElementById("major-minor-button").style.display = "none";  // 메이저와 마이너 버튼 숨기기
 }
 
-// 메이저와 마이너 버튼을 보이는 함수
 function showMajorMinorButton() {
-    document.getElementById("major-minor-button").style.display = "block";
+    document.getElementById("major-minor-button").style.display = "block";  // 메이저와 마이너 버튼 보이기
 }
 
-// 선택된 카드 정보 업데이트 함수
 function updateSelectedCardInfo() {
-    const selectedCardInfoElement = document.getElementById("selected-card-info");
+    const selectedCardInfoElement = document.getElementById("selected-card-info");  // 선택된 카드 정보 요소 가져오기
     const majorMinorButton = document.getElementById("major-minor-button");
 
-    if (selectedCard) {
+    if (selectedCard) {  // 카드가 선택된 경우
         selectedCardInfoElement.textContent = `선택된 카드: ${selectedCard}, 역방향 상태: ${reverseMode ? '활성화' : '비활성화'}, 메이저/마이너 사용: ${majorMinorButton.classList.contains('active') ? '활성화' : '비활성화'}`;
-    } else {
+    } else {  // 카드가 선택되지 않은 경우
         selectedCardInfoElement.textContent = "카드를 선택하세요.";
     }
 }
 
-// 카드 뽑기 버튼 표시 함수
 function showDrawCardButton() {
     const drawCardButton = document.getElementById("draw-card-button");
-    drawCardButton.style.display = "block";
+    drawCardButton.style.display = "block";  // 카드 뽑기 버튼 표시
 }
 
-// 버튼의 투명도 업데이트 함수
 function updateButtonOpacity(selectedButton) {
     const buttons = document.querySelectorAll(".button-group button");
     buttons.forEach(button => {
         if (button === selectedButton) {
-            button.style.opacity = 1; // 선택된 버튼은 투명하지 않게
+            button.style.opacity = 1;  // 선택된 버튼은 투명하지 않게
         }
     });
 }
 
-// 다른 버튼의 투명도 초기화 함수
 function resetOtherButtonOpacity(selectedButton) {
     const buttons = document.querySelectorAll(".button-group button");
     buttons.forEach(button => {
         if (button !== selectedButton) {
-            button.style.opacity = 0.5; // 선택되지 않은 버튼은 투명도를 초기화
+            button.style.opacity = 0.5;  // 선택되지 않은 버튼은 투명도를 초기화
         }
     });
 }
 
-// 역방향 버튼의 투명도 업데이트 함수
 function updateReverseButtonOpacity() {
     const button = document.getElementById("reverse-button");
     if (reverseMode) {
-        button.style.opacity = 1; // 활성화되었을 때 투명하지 않게
+        button.style.opacity = 1;  // 활성화되었을 때 투명하지 않게
     } else {
-        button.style.opacity = 0.5; // 비활성화되었을 때 투명도를 초기화
+        button.style.opacity = 0.5;  // 비활성화되었을 때 투명도를 초기화
     }
 }
 
-// 메이저/마이너 버튼의 투명도 업데이트 함수
 function updateMajorMinorButtonOpacity() {
     const button = document.getElementById("major-minor-button");
     if (majorMinorMode === "both") {
-        button.style.opacity = 1; // 활성화되었을 때 투명하지 않게
+        button.style.opacity = 1;  // 활성화되었을 때 투명하지 않게
     } else {
-        button.style.opacity = 0.5; // 비활성화되었을 때 투명도를 초기화
+        button.style.opacity = 0.5;  // 비활성화되었을 때 투명도를 초기화
     }
+}
+
+// 랜덤 카드 선택 함수
+function getRandomCard(isMajor) {
+    const cardNames = isMajor ?  // 메이저 카드 목록
+        ["00_The_Fool", "01_The_Magician", "02_The_High_Priestess", "03_The_Empress", "04_The_Emperor",
+        "05_The_Hierophant", "06_The_Lovers", "07_The_Chariot", "08_Strength", "09_The_Hermit",
+        "10_Wheel_of_Fortune", "11_Justice", "12_The_Hanged_Man", "13_Death", "14_Temperance",
+        "15_The_Devil", "16_The_Tower", "17_The_Star", "18_The_Moon", "19_The_Sun",
+        "20_Judgement", "21_The_World"] :
+        // 메이저 + 마이너 카드 목록
+        ["00_The_Fool", "01_The_Magician", "02_The_High_Priestess", "03_The_Empress", "04_The_Emperor",
+        "05_The_Hierophant", "06_The_Lovers", "07_The_Chariot", "08_Strength", "09_The_Hermit",
+        "10_Wheel_of_Fortune", "11_Justice", "12_The_Hanged_Man", "13_Death", "14_Temperance",
+        "15_The_Devil", "16_The_Tower", "17_The_Star", "18_The_Moon", "19_The_Sun",
+        "20_Judgement", "21_The_World", "Ace_of_Cups", "Two_of_Cups", "Three_of_Cups", "Four_of_Cups", "Five_of_Cups", "Six_of_Cups",
+        "Seven_of_Cups", "Eight_of_Cups", "Nine_of_Cups", "Ten_of_Cups", "Page_of_Cups", "Knight_of_Cups",
+        "Queen_of_Cups", "King_of_Cups", "Ace_of_Pentacles", "Two_of_Pentacles", "Three_of_Pentacles",
+        "Four_of_Pentacles", "Five_of_Pentacles", "Six_of_Pentacles", "Seven_of_Pentacles", "Eight_of_Pentacles",
+        "Nine_of_Pentacles", "Ten_of_Pentacles", "Page_of_Pentacles", "Knight_of_Pentacles", "Queen_of_Pentacles",
+        "King_of_Pentacles", "Ace_of_Swords", "Two_of_Swords", "Three_of_Swords", "Four_of_Swords", "Five_of_Swords",
+        "Six_of_Swords", "Seven_of_Swords", "Eight_of_Swords", "Nine_of_Swords", "Ten_of_Swords", "Page_of_Swords",
+        "Knight_of_Swords", "Queen_of_Swords", "King_of_Swords", "Ace_of_Wands", "Two_of_Wands", "Three_of_Wands",
+        "Four_of_Wands", "Five_of_Wands", "Six_of_Wands", "Seven_of_Wands", "Eight_of_Wands", "Nine_of_Wands",
+        "Ten_of_Wands", "Page_of_Wands", "Knight_of_Wands", "Queen_of_Wands", "King_of_Wands"];
+
+    const randomIndex = Math.floor(Math.random() * cardNames.length);  // 랜덤 인덱스 생성
+    return cardNames[randomIndex];  // 랜덤 카드 이름 반환
 }
