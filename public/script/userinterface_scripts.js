@@ -15,10 +15,34 @@ window.onload = function() {
         }
     });
 
-    // 폼 제출 시 taromain.html로 이동
+    // 폼 제출 시 서버에 사용자 정보를 전송하고 taromain.html로 이동
     document.getElementById("user-form").addEventListener("submit", function(event) {
         event.preventDefault(); // 기본 폼 제출 동작을 막음
-        // 폼 데이터 유효성 검사 및 서버 전송 (필요시 추가)
-        window.location.href = 'taromain.html'; // taromain.html로 리디렉션
+
+        const formData = new FormData(this);
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        fetch('/api/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.userId) {
+                localStorage.setItem('userId', result.userId);
+                window.location.href = 'taromain.html'; // taromain.html로 리디렉션
+            } else {
+                alert('사용자 정보를 저장하는데 실패했습니다: ' + result.error);
+            }
+        })
+        .catch(error => {
+            alert('서버 오류: ' + error);
+        });
     });
 };

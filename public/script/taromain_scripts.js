@@ -7,8 +7,15 @@ let selectedCardCount = 0;
 // 역방향 상태를 저장하는 변수
 let reverseMode = false;
 
+// 메이저와 마이너 상태를 저장하는 변수
+let majorMinorMode = "both";  // 기본값을 both로 설정
+
 // 페이지 로드 시 초기화 함수
 window.onload = function() {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+        document.getElementById('user-id').value = userId;
+    }
     hideReverseButton();
     hideMajorMinorButton();
 };
@@ -16,7 +23,7 @@ window.onload = function() {
 // 버튼 클릭 이벤트 처리
 document.getElementById("one-card-button").addEventListener("click", function() {
     selectedCardCount = 1; // 원 카드 선택 시 1장
-    selectedCard = "원카드";
+    selectedCard = "one-card";
     updateSelectedCardInfo();
     showDrawCardButton();
     showReverseButton(); // 역방향 버튼 보이기
@@ -27,7 +34,7 @@ document.getElementById("one-card-button").addEventListener("click", function() 
 
 document.getElementById("three-cards-button").addEventListener("click", function() {
     selectedCardCount = 3; // 쓰리 카드 선택 시 3장
-    selectedCard = "쓰리카드";
+    selectedCard = "three-cards";
     updateSelectedCardInfo();
     showDrawCardButton();
     showReverseButton(); // 역방향 버튼 보이기
@@ -38,7 +45,7 @@ document.getElementById("three-cards-button").addEventListener("click", function
 
 document.getElementById("four-cards-button").addEventListener("click", function() {
     selectedCardCount = 4; // 포 카드 선택 시 4장
-    selectedCard = "포카드";
+    selectedCard = "four-cards";
     updateSelectedCardInfo();
     showDrawCardButton();
     showReverseButton(); // 역방향 버튼 보이기
@@ -49,7 +56,7 @@ document.getElementById("four-cards-button").addEventListener("click", function(
 
 document.getElementById("five-cards-button").addEventListener("click", function() {
     selectedCardCount = 5; // 파이브 카드 선택 시 5장
-    selectedCard = "파이브카드";
+    selectedCard = "five-cards";
     updateSelectedCardInfo();
     showDrawCardButton();
     showReverseButton(); // 역방향 버튼 보이기
@@ -68,15 +75,44 @@ document.getElementById("reverse-button").addEventListener("click", function() {
 
 document.getElementById("major-minor-button").addEventListener("click", function() {
     const button = document.getElementById("major-minor-button");
+    majorMinorMode = majorMinorMode === "both" ? "major" : "both";
     button.classList.toggle("active"); // 활성/비활성 클래스 토글
     updateSelectedCardInfo();
     updateMajorMinorButtonOpacity(); // 메이저/마이너 버튼의 투명도만 업데이트
 });
 
-document.getElementById("draw-card-button").addEventListener("click", function() {
-    // 선택된 카드를 hidden input에 설정
+document.getElementById("draw-card-button").addEventListener("click", function(event) {
+    event.preventDefault(); // 기본 폼 제출 동작을 막음
+    // 선택된 타로 정보를 hidden input에 설정
     document.getElementById("selected-card").value = selectedCard;
-    document.getElementById("selected-card-type").value = selectedCard; // 추가된 부분: 선택된 점괘 종류를 hidden input에 설정
+    document.getElementById("selected-card-type").value = reverseMode;
+    document.getElementById("major-minor").value = majorMinorMode;
+
+    // 서버에 데이터 전송
+    const formData = new FormData(document.getElementById("tarot-form"));
+    const data = {};
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+
+    fetch('/api/users/tarot', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.message === "User tarot info updated successfully") {
+            window.location.href = 'pickcard.html'; // 성공 시 pickcard.html로 이동
+        } else {
+            alert('타로 정보를 저장하는데 실패했습니다: ' + result.error);
+        }
+    })
+    .catch(error => {
+        alert('서버 오류: ' + error);
+    });
 });
 
 // 역방향 버튼을 숨기는 함수
@@ -150,7 +186,7 @@ function updateReverseButtonOpacity() {
 // 메이저/마이너 버튼의 투명도 업데이트 함수
 function updateMajorMinorButtonOpacity() {
     const button = document.getElementById("major-minor-button");
-    if (button.classList.contains("active")) {
+    if (majorMinorMode === "both") {
         button.style.opacity = 1; // 활성화되었을 때 투명하지 않게
     } else {
         button.style.opacity = 0.5; // 비활성화되었을 때 투명도를 초기화
