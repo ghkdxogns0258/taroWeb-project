@@ -81,38 +81,12 @@ document.getElementById("major-minor-button").addEventListener("click", function
     updateMajorMinorButtonOpacity(); // 메이저/마이너 버튼의 투명도만 업데이트
 });
 
-document.getElementById("draw-card-button").addEventListener("click", function(event) {
-    event.preventDefault(); // 기본 폼 제출 동작을 막음
+document.getElementById("draw-card-button").addEventListener("click", function() {
     // 선택된 타로 정보를 hidden input에 설정
     document.getElementById("selected-card").value = selectedCard;
     document.getElementById("selected-card-type").value = reverseMode;
     document.getElementById("major-minor").value = majorMinorMode;
-
-    // 서버에 데이터 전송
-    const formData = new FormData(document.getElementById("tarot-form"));
-    const data = {};
-    formData.forEach((value, key) => {
-        data[key] = value;
-    });
-
-    fetch('/api/users/tarot', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(result => {
-        if (result.message === "User tarot info updated successfully") {
-            window.location.href = 'pickcard.html'; // 성공 시 pickcard.html로 이동
-        } else {
-            alert('타로 정보를 저장하는데 실패했습니다: ' + result.error);
-        }
-    })
-    .catch(error => {
-        alert('서버 오류: ' + error);
-    });
+    document.getElementById("tarot-form").submit(); // 폼 제출
 });
 
 // 역방향 버튼을 숨기는 함수
