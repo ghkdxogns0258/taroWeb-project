@@ -181,22 +181,22 @@ function updateSelectedCards() {
         countContainer.style.display = "flex";
         switch (availableCards - selectedCards) {
             case 5:
-                countImage.src = "images/five.png";
-                break;
-            case 4:
-                countImage.src = "images/four.png";
-                break;
-            case 3:
-                countImage.src = "images/three.png";
-                break;
-            case 2:
-                countImage.src = "images/two.png";
-                break;
-            case 1:
-                countImage.src = "images/one.png";
-                break;
-            default:
-                countImage.src = "images/zero.png";
+        countImage.src = "https://tarowebproject.s3.amazonaws.com/타로 카드 선택 카운트/five.png";
+        break;
+    case 4:
+        countImage.src = "https://tarowebproject.s3.amazonaws.com/타로 카드 선택 카운트/four.png";
+        break;
+    case 3:
+        countImage.src = "https://tarowebproject.s3.amazonaws.com/타로 카드 선택 카운트/three.png";
+        break;
+    case 2:
+        countImage.src = "https://tarowebproject.s3.amazonaws.com/타로 카드 선택 카운트/two.png";
+        break;
+    case 1:
+        countImage.src = "https://tarowebproject.s3.amazonaws.com/타로 카드 선택 카운트/one.png";
+        break;
+    default:
+        countImage.src = "https://tarowebproject.s3.amazonaws.com/타로 카드 선택 카운트/zero.png";
         }
     }
 }
