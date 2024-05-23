@@ -115,6 +115,12 @@ document.getElementById("draw-card-button").addEventListener("click", function(e
     document.getElementById("reverse").value = reverseMode;  // 수정: selected-card-type -> reverse
     document.getElementById("majorMinor").value = majorMinorMode;
 
+    // 로컬 스토리지에 저장
+    localStorage.setItem('tarotSelection', tarotSelection);
+    localStorage.setItem('reverseMode', reverseMode);
+    localStorage.setItem('majorMinorMode', majorMinorMode);
+    localStorage.setItem('selectedCardCount', selectedCardCount);
+
     // 서버에 데이터 전송
     const formData = new FormData(document.getElementById("tarot-form"));
     const data = {};
@@ -151,6 +157,7 @@ document.getElementById("draw-card-button").addEventListener("click", function(e
     .then(result => {
         if (result.reading) {
             localStorage.setItem('tarotReading', result.reading); // 타로 결과를 로컬 스토리지에 저장
+            localStorage.setItem('selectedCards', JSON.stringify(selectedCards)); // 선택된 카드 정보를 로컬 스토리지에 저장
             window.location.href = 'pickcard.html';
         } else {
             alert('타로 정보를 저장하는데 실패했습니다: ' + result.error);
@@ -231,6 +238,7 @@ function getRandomCard(isMajor) {
     const randomIndex = Math.floor(Math.random() * cardNames.length);  // 랜덤 인덱스 생성
     return cardNames[randomIndex];  // 랜덤 카드 이름 반환
 }
+
 // 카드 뽑기 함수
 function drawCards() {
     selectedCards = [];

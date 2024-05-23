@@ -8,6 +8,16 @@ const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 app.use(helmet());  // 보안 헤더 설정
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      imgSrc: ["'self'", "https://tarowebproject.s3.amazonaws.com", "data:"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+    },
+  })
+);
 app.use(cors());    // CORS 정책을 설정하여 다양한 출처에서의 접근을 허용
 app.use(express.json());  // JSON 형식의 요청 본문을 파싱
 app.use(bodyParser.json());

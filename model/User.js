@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     mbti: { type: String, required: true },
     fortune: { type: String, required: true },
     tarotSelection: { type: String, required: false },  // 타로 점 선택 (원카드, 쓰리카드 등)
-    selected_cards: [{  // 수정된 부분
+    selected_cards: [{ 
         name: { type: String, required: true },
         reversed: { type: Boolean, required: true }
     }],

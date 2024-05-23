@@ -1,12 +1,52 @@
 let selectedCards = 0; // 선택된 카드 개수 초기화
 let availableCards = 0; // 선택 가능한 카드 개수 초기화
 
+// 로컬 스토리지에서 설정 값을 가져옴
+const tarotSelection = localStorage.getItem('tarotSelection');
+const majorMinorMode = localStorage.getItem('majorMinorMode');
+const selectedCardCount = parseInt(localStorage.getItem('selectedCardCount'), 10);
+
+// 페이지 로드 시 초기화 함수
 window.onload = function() {
+    // 버튼 클릭 없이 자동으로 카드 세팅
+    setCardSettings(tarotSelection, majorMinorMode, selectedCardCount);
+
     // 선택 가능한 카드의 개수가 0이 아닐 때만 결과 확인 버튼 표시
-    if (availableCards !== 0) {
+    if (selectedCardCount !== 0) {
         document.querySelector(".submit").classList.add("show");
     }
 };
+
+function setCardSettings(tarotSelection, majorMinorMode, selectedCardCount) {
+    // 메이저/마이너 카드 설정
+    if (majorMinorMode === 'major') {
+        document.getElementById('major-button').click();
+    } else {
+        document.getElementById('major-minor-button').click();
+    }
+
+    // 카드 개수 설정
+    switch (tarotSelection) {
+        case '원 카드':
+            availableCards = 1;
+            break;
+        case '쓰리 카드':
+            availableCards = 3;
+            break;
+        case '포 카드':
+            availableCards = 4;
+            break;
+        case '파이브 카드':
+            availableCards = 5;
+            break;
+    }
+    updateSelectedCards(); // 선택된 카드 정보 업데이트
+
+    // 카드 세팅
+    if (availableCards > 0) {
+        document.querySelector(".submit").classList.add("show");
+    }
+}
 
 // 결과 확인 버튼 이벤트 처리
 document.getElementById("draw-card-button").addEventListener("click", function() {
@@ -14,9 +54,8 @@ document.getElementById("draw-card-button").addEventListener("click", function()
 
     // 선택된 카드에 애니메이션 클래스 추가
     selectedDivs.forEach(div => div.classList.add("card-animation"));
-     // 결과 확인 페이지로 이동
-     window.location.href = 'taroresult.html';
-
+    // 결과 확인 페이지로 이동
+    window.location.href = 'taroresult.html';
 });
 
 // 카드 레이블 생성 및 추가
@@ -33,38 +72,6 @@ cardBox.addEventListener("click", function(event) {
             cardBox.removeEventListener("click", cardClickHandler);
         }
     }
-});
-
-// 파이브 버튼 이벤트 처리
-document.getElementById("five-cards-button").addEventListener("click", function() {
-    availableCards = 5;
-    updateSelectedCards();
-    disableOtherButtons("five-cards-button");
-    updateNumberImage(); // 숫자 이미지 업데이트 함수 호출
-});
-
-// 포 버튼 이벤트 처리
-document.getElementById("four-cards-button").addEventListener("click", function() {
-    availableCards = 4;
-    updateSelectedCards();
-    disableOtherButtons("four-cards-button");
-    updateNumberImage(); // 숫자 이미지 업데이트 함수 호출
-});
-
-// 쓰리 버튼 이벤트 처리
-document.getElementById("three-cards-button").addEventListener("click", function() {
-    availableCards = 3;
-    updateSelectedCards();
-    disableOtherButtons("three-cards-button");
-    updateNumberImage(); // 숫자 이미지 업데이트 함수 호출
-});
-
-// 원 버튼 이벤트 처리
-document.getElementById("one-card-button").addEventListener("click", function() {
-    availableCards = 1;
-    updateSelectedCards();
-    disableOtherButtons("one-card-button");
-    updateNumberImage(); // 숫자 이미지 업데이트 함수 호출
 });
 
 // 자동 선택 버튼 이벤트 처리
