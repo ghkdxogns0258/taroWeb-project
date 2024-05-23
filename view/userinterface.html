@@ -3,94 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>사용자 정보 입력</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #232d32; /* 코발트 블루 배경색 */
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .form-group input[type="text"],
-        .form-group input[type="date"] {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-        .form-group select {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-        .form-group input[type="radio"] {
-            margin-right: 10px;
-        }
-        .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-            resize: vertical;
-        }
-        .submit-button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 18px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .submit-button:hover {
-            background-color: #0056b3;
-        }
-        .mbti-test-button {
-            display: inline-block;
-            background-color: #4CAF50; /* 초록색 */
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 16px;
-            margin-top: 10px;
-            border-radius: 5px;
-        }
-        .mbti-test-button:hover {
-            background-color: #45a049; /* 더 진한 초록색 */
-        }
-    </style>
+    <link rel="stylesheet" href="public/css/userinterface_styles.css">
 </head>
 <body>
     <div class="container">
         <h2>사용자 정보 입력</h2>
-        <form action="taromain.html" method="post">
+        <form action="/api/users" method="post" id="user-form">
             <div class="form-group">
-                <label for="age">나이 (YYYYMMDD 형식으로 입력)</label>
-                <input type="text" id="age" name="age" maxlength="8" pattern="\d{8}" title="ex)20010101" placeholder="ex)20010101" required>
+                <label for="birthdate">나이 (YYYYMMDD 형식으로 입력)</label>
+            <input type="text" id="birthdate" name="birthdate" maxlength="8" pattern="\d{8}" title="ex)20010101" placeholder="ex)20010101" required>
             </div>
             <div class="form-group">
                 <label>성별</label>
@@ -105,7 +26,7 @@
             <div class="form-group">
                 <label for="mbti">MBTI</label>
                 <select id="mbti" name="mbti" required>
-                    <option value="">MBTI를 선택하세요</option>
+                    <option value="" disabled selected hidden>MBTI를 선택하세요</option>
                     <option value="ISTJ">ISTJ</option>
                     <option value="ISFJ">ISFJ</option>
                     <option value="INFJ">INFJ</option>
@@ -126,11 +47,26 @@
                 <a href="https://www.16personalities.com/ko/%EB%AC%B4%EB%A3%8C-%EC%84%B1%EA%B2%A9-%EC%9C%A0%ED%98%95-%EA%B2%80%EC%82%AC" target="_blank" class="mbti-test-button">MBTI 검사</a>
             </div>
             <div class="form-group">
-                <label for="request">원하는 점괘 내용</label>
-                <textarea id="request" name="request" rows="4" placeholder="원하시는 점괘를 작성해주세요"></textarea>
+                <label for="fortune">타로 점괘</label>
+                <select id="fortune" name="fortune" required>
+                    <option value="" disabled selected hidden>타로 점괘를 선택하세요</option>
+                    <option value="오늘의 운세">오늘의 운세</option>
+                    <option value="연애운">연애운</option>
+                    <option value="직업운">직업운</option>
+                    <option value="사람관계">사람관계</option>
+                    <option value="결정과 선택">결정과 선택</option>
+                    <option value="미래">미래</option>
+                    <option value="금전운">금전운</option>
+                    <option value="목표">목표</option>
+                    <option value="행복과 만족">행복과 만족</option>
+                    <option value="나의 속마음">나의 속마음</option>
+                    <option value="사업운">사업운</option>
+                    <option value="학업">학업</option>
+                </select>
             </div>
             <button type="submit" class="submit-button">제출하기</button>
         </form>
     </div>
+    <script src="public/script/userinterface_scripts.js"></script>
 </body>
 </html>

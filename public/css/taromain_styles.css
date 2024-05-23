@@ -1,0 +1,49 @@
+body {
+    background-color: #232d32;
+    background-image: none;
+    background-size: cover;
+}
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.button-group button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #FFA500;
+    background-color: transparent;
+    border: 2px solid #FFA500;
+    opacity: 0.5;
+}
+.button-group button.active {
+    opacity: 1;
+}
+#selected-card-info {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #FFA500;
+}
+#draw-card-button {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 0;
+    width: 100px;
+    height: 160px;
+    border: none;
+    background-color: #232d32;
+    background-image: url('https://tarowebproject.s3.amazonaws.com/카드 뒷면 이미지/card_backside.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
