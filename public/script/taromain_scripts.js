@@ -1,5 +1,8 @@
+// 선택된 타로 점 방식을 저장하는 변수
+let tarotSelection = null;
+
 // 선택된 점괘 카드를 저장하는 변수
-let selectedCard = null;
+let selectedCards = [];
 
 // 선택된 카드의 개수를 저장하는 변수
 let selectedCardCount = 0;
@@ -23,8 +26,8 @@ window.onload = function() {
 // 카드 선택 버튼 클릭 이벤트 처리
 document.getElementById("one-card-button").addEventListener("click", function() {
     selectedCardCount = 1;  // 원 카드 선택 시 1장
-    selectedCard = getRandomCard(majorMinorMode !== "major");  // 랜덤 카드 선택
-    updateSelectedCardInfo();  // 선택된 카드 정보 업데이트
+    tarotSelection = "원 카드";
+    resetCardSelection();  // 카드 선택 초기화
     showDrawCardButton();  // 카드 뽑기 버튼 표시
     showReverseButton();  // 역방향 버튼 보이기
     hideMajorMinorButton();  // 메이저와 마이너 버튼 숨기기
@@ -34,8 +37,8 @@ document.getElementById("one-card-button").addEventListener("click", function() 
 
 document.getElementById("three-cards-button").addEventListener("click", function() {
     selectedCardCount = 3;  // 쓰리 카드 선택 시 3장
-    selectedCard = getRandomCard(majorMinorMode !== "major");  // 랜덤 카드 선택
-    updateSelectedCardInfo();  // 선택된 카드 정보 업데이트
+    tarotSelection = "쓰리 카드";
+    resetCardSelection();  // 카드 선택 초기화
     showDrawCardButton();  // 카드 뽑기 버튼 표시
     showReverseButton();  // 역방향 버튼 보이기
     hideMajorMinorButton();  // 메이저와 마이너 버튼 숨기기
@@ -45,8 +48,8 @@ document.getElementById("three-cards-button").addEventListener("click", function
 
 document.getElementById("four-cards-button").addEventListener("click", function() {
     selectedCardCount = 4;  // 포 카드 선택 시 4장
-    selectedCard = getRandomCard(majorMinorMode !== "major");  // 랜덤 카드 선택
-    updateSelectedCardInfo();  // 선택된 카드 정보 업데이트
+    tarotSelection = "포 카드";
+    resetCardSelection();  // 카드 선택 초기화
     showDrawCardButton();  // 카드 뽑기 버튼 표시
     showReverseButton();  // 역방향 버튼 보이기
     showMajorMinorButton();  // 메이저와 마이너 버튼 보이기
@@ -56,8 +59,8 @@ document.getElementById("four-cards-button").addEventListener("click", function(
 
 document.getElementById("five-cards-button").addEventListener("click", function() {
     selectedCardCount = 5;  // 파이브 카드 선택 시 5장
-    selectedCard = getRandomCard(majorMinorMode !== "major");  // 랜덤 카드 선택
-    updateSelectedCardInfo();  // 선택된 카드 정보 업데이트
+    tarotSelection = "파이브 카드";
+    resetCardSelection();  // 카드 선택 초기화
     showDrawCardButton();  // 카드 뽑기 버튼 표시
     showReverseButton();  // 역방향 버튼 보이기
     showMajorMinorButton();  // 메이저와 마이너 버튼 보이기
@@ -65,11 +68,32 @@ document.getElementById("five-cards-button").addEventListener("click", function(
     resetOtherButtonOpacity(this);  // 다른 버튼의 투명도 초기화
 });
 
+function resetOtherButtonOpacity(selectedButton) {
+    const buttons = document.querySelectorAll(".button-group button");
+    buttons.forEach(button => {
+        if (button !== selectedButton) {
+            button.style.opacity = 0.5;  // 선택되지 않은 버튼은 투명도를 초기화
+        }
+    });
+}
+
+function resetCardSelection() {
+    selectedCards = [];
+    document.getElementById("selected-cards").value = "";
+    updateSelectedCardInfo();  // 선택된 카드 정보 업데이트
+}
+
+function updateSelectedCardInfo() {
+    const selectedCardsField = document.getElementById("selected-cards");
+    const selectedCardsJson = JSON.stringify(selectedCards);  // 선택된 카드 배열을 JSON 문자열로 변환
+    selectedCardsField.value = selectedCardsJson;  // JSON 문자열을 hidden input에 저장
+    console.log("selectedCardsField.value:", selectedCardsField.value);  // 디버깅을 위해 출력
+}
+
 document.getElementById("reverse-button").addEventListener("click", function() {
     const button = document.getElementById("reverse-button");
     reverseMode = !reverseMode;  // 역방향 모드 토글
     button.classList.toggle("active");  // 활성/비활성 클래스 토글
-    updateSelectedCardInfo();  // 선택된 카드 정보 업데이트
     updateReverseButtonOpacity();  // 역방향 버튼의 투명도만 업데이트
 });
 
@@ -77,7 +101,6 @@ document.getElementById("major-minor-button").addEventListener("click", function
     const button = document.getElementById("major-minor-button");
     majorMinorMode = majorMinorMode === "both" ? "major" : "both";  // 메이저/마이너 모드 토글
     button.classList.toggle("active");  // 활성/비활성 클래스 토글
-    updateSelectedCardInfo();  // 선택된 카드 정보 업데이트
     updateMajorMinorButtonOpacity();  // 메이저/마이너 버튼의 투명도만 업데이트
 });
 
@@ -86,9 +109,11 @@ document.getElementById("draw-card-button").addEventListener("click", function(e
     event.preventDefault(); // 기본 폼 제출 동작을 막음
 
     // 선택된 타로 정보를 hidden input에 설정
-    document.getElementById("selected-card").value = selectedCard;
-    document.getElementById("selected-card-type").value = reverseMode;
-    document.getElementById("major-minor").value = majorMinorMode;
+    drawCards();  // 카드를 뽑음
+    document.getElementById("selected-cards").value = JSON.stringify(selectedCards);
+    document.getElementById("tarotSelection").value = tarotSelection;
+    document.getElementById("reverse").value = reverseMode;  // 수정: selected-card-type -> reverse
+    document.getElementById("majorMinor").value = majorMinorMode;
 
     // 서버에 데이터 전송
     const formData = new FormData(document.getElementById("tarot-form"));
@@ -96,6 +121,8 @@ document.getElementById("draw-card-button").addEventListener("click", function(e
     formData.forEach((value, key) => {
         data[key] = value;
     });
+
+    console.log("Sending data to server:", data); // 디버깅을 위해 출력
 
     // 사용자 타로 정보를 먼저 업데이트
     fetch('/api/users/tarot', {
@@ -134,7 +161,6 @@ document.getElementById("draw-card-button").addEventListener("click", function(e
     });
 });
 
-
 function hideReverseButton() {
     document.getElementById("reverse-button").style.display = "none";  // 역방향 버튼 숨기기
 }
@@ -151,36 +177,11 @@ function showMajorMinorButton() {
     document.getElementById("major-minor-button").style.display = "block";  // 메이저와 마이너 버튼 보이기
 }
 
-function updateSelectedCardInfo() {
-    const selectedCardInfoElement = document.getElementById("selected-card-info");  // 선택된 카드 정보 요소 가져오기
-    const majorMinorButton = document.getElementById("major-minor-button");
-
-    if (selectedCard) {  // 카드가 선택된 경우
-        selectedCardInfoElement.textContent = `선택된 카드: ${selectedCard}, 역방향 상태: ${reverseMode ? '활성화' : '비활성화'}, 메이저/마이너 사용: ${majorMinorButton.classList.contains('active') ? '활성화' : '비활성화'}`;
-    } else {  // 카드가 선택되지 않은 경우
-        selectedCardInfoElement.textContent = "카드를 선택하세요.";
-    }
-}
-
-function showDrawCardButton() {
-    const drawCardButton = document.getElementById("draw-card-button");
-    drawCardButton.style.display = "block";  // 카드 뽑기 버튼 표시
-}
-
 function updateButtonOpacity(selectedButton) {
     const buttons = document.querySelectorAll(".button-group button");
     buttons.forEach(button => {
         if (button === selectedButton) {
             button.style.opacity = 1;  // 선택된 버튼은 투명하지 않게
-        }
-    });
-}
-
-function resetOtherButtonOpacity(selectedButton) {
-    const buttons = document.querySelectorAll(".button-group button");
-    buttons.forEach(button => {
-        if (button !== selectedButton) {
-            button.style.opacity = 0.5;  // 선택되지 않은 버튼은 투명도를 초기화
         }
     });
 }
@@ -229,4 +230,20 @@ function getRandomCard(isMajor) {
 
     const randomIndex = Math.floor(Math.random() * cardNames.length);  // 랜덤 인덱스 생성
     return cardNames[randomIndex];  // 랜덤 카드 이름 반환
+}
+// 카드 뽑기 함수
+function drawCards() {
+    selectedCards = [];
+    for (let i = 0; i < selectedCardCount; i++) {
+        const card = getRandomCard(majorMinorMode !== "major");
+        const isReversed = Math.random() < 0.5;  // 역방향 여부를 랜덤으로 결정
+        selectedCards.push({ name: card, reversed: isReversed });
+    }
+    console.log("Drawn cards:", selectedCards);  // 디버깅을 위해 출력
+    updateSelectedCardInfo();  // 선택된 카드 정보 업데이트
+}
+
+function showDrawCardButton() {
+    const drawCardButton = document.getElementById("draw-card-button");
+    drawCardButton.style.display = "block";  // 카드 뽑기 버튼 표시
 }

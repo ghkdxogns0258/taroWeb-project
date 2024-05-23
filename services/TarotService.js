@@ -3,13 +3,13 @@ const User = require('../model/User');
 const TarotAPI = require('../integration/TarotAPI');
 
 // 타로 읽기를 수행하는 함수
-exports.performReading = async (userId, selectedCard, reverse = false, majorMinor = "both") => {
+exports.performReading = async (userId, selectedCards, reverse = false, majorMinor = "both") => {
   try {
     const user = await User.findById(userId);
     if (!user) throw new Error('User not found');
 
     const direction = reverse ? 'reversed' : 'upright';
-    const prompt = createPrompt(user, selectedCard, direction, majorMinor);
+    const prompt = createPrompt(user, selectedCards, direction, majorMinor);
 
     return await TarotAPI.getReading(prompt);
   } catch (error) {
@@ -29,11 +29,14 @@ function createPrompt(user, cardName, direction, majorMinor) {
   - MBTI: ${user.mbti}
   - Fortune type: ${user.fortune}
   - Tarot selection: ${user.tarotSelection}
+  - Selected cards: ${user.selected_cards}
   - Card: ${cardName}
   - Direction: ${direction}
   - Major/Minor: ${majorMinor}
 
+  The user is interested in the following type of fortune: ${user.fortune}.
+  The user has selected the following tarot reading method: ${user.tarotSelection}.
   Considering the user's MBTI type (${user.mbti}), provide a personalized tarot reading interpretation. 
-  Explain how the card's meaning might be particularly relevant or interpreted for someone with this MBTI type.
+  Explain how the card's meaning might be particularly relevant or interpreted for someone with this MBTI type and how it applies to the fortune type they are interested in.
   `;
 }

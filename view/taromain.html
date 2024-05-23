@@ -20,10 +20,11 @@
         </div>
         <div id="selected-card-info"></div>
         <form id="tarot-form" action="/api/users/tarot" method="post">
-            <input type="hidden" id="user-id" name="userId">
-            <input type="hidden" id="selected-card" name="tarotSelection">
-            <input type="hidden" id="selected-card-type" name="reverse" value="false">
-            <input type="hidden" id="major-minor" name="majorMinor" value="both">
+                <input type="hidden" id="user-id" name="userId">
+                <input type="hidden" id="selected-cards" name="selected_cards">
+                <input type="hidden" id="tarotSelection" name="tarotSelection">
+                <input type="hidden" id="reverse" name="reverse">
+                <input type="hidden" id="majorMinor" name="majorMinor">
             <button id="draw-card-button" type="submit">타로 정보 제출</button>
         </form>
     </div>
