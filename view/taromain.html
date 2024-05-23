@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="container">
-        <h2 style="color: #FFA500;">타로 점 선택</h2>''''
+        <h2 style="color: #FFA500;">타로 점 선택</h2>
         <div class="button-group">
             <button id="one-card-button" data-card-limit="1">원카드</button>
             <button id="three-cards-button" data-card-limit="3">쓰리카드</button>
@@ -19,10 +19,13 @@
             <button id="major-minor-button">메이저와 마이너 모두 사용</button>
         </div>
         <div id="selected-card-info"></div>
-        <form id="card-form" action="pickcard.html" method="post">
-            <input type="hidden" id="selected-card" name="selected-card">
-            <input type="hidden" id="selected-card-type" name="selected-card-type">
-            <button id="draw-card-button" type="submit"></button>
+        <form id="tarot-form" action="/api/users/tarot" method="post">
+                <input type="hidden" id="user-id" name="userId">
+                <input type="hidden" id="selected-cards" name="selected_cards">
+                <input type="hidden" id="tarotSelection" name="tarotSelection">
+                <input type="hidden" id="reverse" name="reverse">
+                <input type="hidden" id="majorMinor" name="majorMinor">
+            <button id="draw-card-button" type="submit">타로 정보 제출</button>
         </form>
     </div>
     <script src="public/script/taromain_scripts.js"></script>

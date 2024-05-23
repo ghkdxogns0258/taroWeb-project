@@ -42,7 +42,7 @@ body {
     height: 160px;
     border: none;
     background-color: #232d32;
-    background-image: url("./image2/카드 뒷면 이미지/card_backside.jpg");
+    background-image: url('https://tarowebproject.s3.amazonaws.com/카드 뒷면 이미지/card_backside.jpg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

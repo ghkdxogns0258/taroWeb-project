@@ -1,230 +1,205 @@
-// 모달 관련 요소
-var modal = document.getElementById("fortuneModal");
-var fortuneText = document.getElementById("fortune-text");
-var copyButton = document.getElementById("copy-button");
+const s3BucketUrl = "https://tarowebproject.s3.amazonaws.com/";
 
-// 점괘 보기 버튼 클릭 시 모달 창 열기
-document.getElementById("show-fortune-button").addEventListener("click", function() {
-    modal.style.display = "block";
-});
+const cardImagePaths = {
+    // 메이저 카드 경로
+    "00_The_Fool": s3BucketUrl + "메이저/0번 바보.jpg",
+    "01_The_Magician": s3BucketUrl + "메이저/1번 마법사.jpg",
+    "02_The_High_Priestess": s3BucketUrl + "메이저/2번 여사제.jpg",
+    "03_The_Empress": s3BucketUrl + "메이저/3번 여황제.jpg",
+    "04_The_Emperor": s3BucketUrl + "메이저/4번 황제.jpg",
+    "05_The_Hierophant": s3BucketUrl + "메이저/5번 교황.jpg",
+    "06_The_Lovers": s3BucketUrl + "메이저/6번 연인.jpg",
+    "07_The_Chariot": s3BucketUrl + "메이저/7번 전차.jpg",
+    "08_Strength": s3BucketUrl + "메이저/8번 힘.jpg",
+    "09_The_Hermit": s3BucketUrl + "메이저/9번 은둔자.jpg",
+    "10_Wheel_of_Fortune": s3BucketUrl + "메이저/10번 운명의 수레바퀴.jpg",
+    "11_Justice": s3BucketUrl + "메이저/11번 정의.jpg",
+    "12_The_Hanged_Man": s3BucketUrl + "메이저/12번 거꾸로 매달린 자.jpg",
+    "13_Death": s3BucketUrl + "메이저/13번 죽음.jpg",
+    "14_Temperance": s3BucketUrl + "메이저/14번 절제.jpg",
+    "15_The_Devil": s3BucketUrl + "메이저/15번 악마.jpg",
+    "16_The_Tower": s3BucketUrl + "메이저/16번 탑.jpg",
+    "17_The_Star": s3BucketUrl + "메이저/17번 별.jpg",
+    "18_The_Moon": s3BucketUrl + "메이저/18번 달.jpg",
+    "19_The_Sun": s3BucketUrl + "메이저/19번 태양.jpg",
+    "20_Judgement": s3BucketUrl + "메이저/20번 심판.jpg",
+    "21_The_World": s3BucketUrl + "메이저/21번 세계.jpg",
+    
+    // 마이너 카드 경로 - 소드
+    "Ace_of_Swords": s3BucketUrl + "마이너(소드,펜타클)/3. 마이너 SWORDS(1번~10번)/소드 1 에이스.jpg",
+    "Two_of_Swords": s3BucketUrl + "마이너(소드,펜타클)/3. 마이너 SWORDS(1번~10번)/소드 2.jpg",
+    "Three_of_Swords": s3BucketUrl + "마이너(소드,펜타클)/3. 마이너 SWORDS(1번~10번)/소드 3.jpg",
+    "Four_of_Swords": s3BucketUrl + "마이너(소드,펜타클)/3. 마이너 SWORDS(1번~10번)/소드 4.jpg",
+    "Five_of_Swords": s3BucketUrl + "마이너(소드,펜타클)/3. 마이너 SWORDS(1번~10번)/소드 5.jpg",
+    "Six_of_Swords": s3BucketUrl + "마이너(소드,펜타클)/3. 마이너 SWORDS(1번~10번)/소드 6.jpg",
+    "Seven_of_Swords": s3BucketUrl + "마이너(소드,펜타클)/3. 마이너 SWORDS(1번~10번)/소드 7.jpg",
+    "Eight_of_Swords": s3BucketUrl + "마이너(소드,펜타클)/3. 마이너 SWORDS(1번~10번)/소드 8.jpg",
+    "Nine_of_Swords": s3BucketUrl + "마이너(소드,펜타클)/3. 마이너 SWORDS(1번~10번)/소드 9.jpg",
+    "Ten_of_Swords": s3BucketUrl + "마이너(소드,펜타클)/3. 마이너 SWORDS(1번~10번)/소드 10.jpg",
+    
+    // 마이너 카드 경로 - 펜타클
+    "Ace_of_Pentacles": s3BucketUrl + "마이너(소드,펜타클)/4. 마이너 PENTACLES(1~10번)/펜타클 1 에이스.jpg",
+    "Two_of_Pentacles": s3BucketUrl + "마이너(소드,펜타클)/4. 마이너 PENTACLES(1~10번)/펜타클 2.jpg",
+    "Three_of_Pentacles": s3BucketUrl + "마이너(소드,펜타클)/4. 마이너 PENTACLES(1~10번)/펜타클 3.jpg",
+    "Four_of_Pentacles": s3BucketUrl + "마이너(소드,펜타클)/4. 마이너 PENTACLES(1~10번)/펜타클 4.jpg",
+    "Five_of_Pentacles": s3BucketUrl + "마이너(소드,펜타클)/4. 마이너 PENTACLES(1~10번)/펜타클 5.jpg",
+    "Six_of_Pentacles": s3BucketUrl + "마이너(소드,펜타클)/4. 마이너 PENTACLES(1~10번)/펜타클 6.jpg",
+    "Seven_of_Pentacles": s3BucketUrl + "마이너(소드,펜타클)/4. 마이너 PENTACLES(1~10번)/펜타클 7.jpg",
+    "Eight_of_Pentacles": s3BucketUrl + "마이너(소드,펜타클)/4. 마이너 PENTACLES(1~10번)/펜타클 8.jpg",
+    "Nine_of_Pentacles": s3BucketUrl + "마이너(소드,펜타클)/4. 마이너 PENTACLES(1~10번)/펜타클 9.jpg",
+    "Ten_of_Pentacles": s3BucketUrl + "마이너(소드,펜타클)/4. 마이너 PENTACLES(1~10번)/펜타클 10.jpg",
+    
+    // 마이너 카드 경로 - 완드
+    "Ace_of_Wands": s3BucketUrl + "마이너(완드,컵)/1. 마이너 WANDS(1~10번)/완드 1 에이스.jpg",
+    "Two_of_Wands": s3BucketUrl + "마이너(완드,컵)/1. 마이너 WANDS(1~10번)/완드 2.jpg",
+    "Three_of_Wands": s3BucketUrl + "마이너(완드,컵)/1. 마이너 WANDS(1~10번)/완드 3.jpg",
+    "Four_of_Wands": s3BucketUrl + "마이너(완드,컵)/1. 마이너 WANDS(1~10번)/완드 4.jpg",
+    "Five_of_Wands": s3BucketUrl + "마이너(완드,컵)/1. 마이너 WANDS(1~10번)/완드 5.jpg",
+    "Six_of_Wands": s3BucketUrl + "마이너(완드,컵)/1. 마이너 WANDS(1~10번)/완드 6.jpg",
+    "Seven_of_Wands": s3BucketUrl + "마이너(완드,컵)/1. 마이너 WANDS(1~10번)/완드 7.jpg",
+    "Eight_of_Wands": s3BucketUrl + "마이너(완드,컵)/1. 마이너 WANDS(1~10번)/완드 8.jpg",
+    "Nine_of_Wands": s3BucketUrl + "마이너(완드,컵)/1. 마이너 WANDS(1~10번)/완드 9.jpg",
+    "Ten_of_Wands": s3BucketUrl + "마이너(완드,컵)/1. 마이너 WANDS(1~10번)/완드 10.jpg",
+    
+    // 마이너 카드 경로 - 컵
+    "Ace_of_Cups": s3BucketUrl + "마이너(완드,컵)/2. 마이너 CUPS(1번~10번)/컵 1 에이스.jpg",
+    "Two_of_Cups": s3BucketUrl + "마이너(완드,컵)/2. 마이너 CUPS(1번~10번)/컵 2.jpg",
+    "Three_of_Cups": s3BucketUrl + "마이너(완드,컵)/2. 마이너 CUPS(1번~10번)/컵 3.jpg",
+    "Four_of_Cups": s3BucketUrl + "마이너(완드,컵)/2. 마이너 CUPS(1번~10번)/컵 4.jpg",
+    "Five_of_Cups": s3BucketUrl + "마이너(완드,컵)/2. 마이너 CUPS(1번~10번)/컵 5.jpg",
+    "Six_of_Cups": s3BucketUrl + "마이너(완드,컵)/2. 마이너 CUPS(1번~10번)/컵 6.jpg",
+    "Seven_of_Cups": s3BucketUrl + "마이너(완드,컵)/2. 마이너 CUPS(1번~10번)/컵 7.jpg",
+    "Eight_of_Cups": s3BucketUrl + "마이너(완드,컵)/2. 마이너 CUPS(1번~10번)/컵 8.jpg",
+    "Nine_of_Cups": s3BucketUrl + "마이너(완드,컵)/2. 마이너 CUPS(1번~10번)/컵 9.jpg",
+    "Ten_of_Cups": s3BucketUrl + "마이너(완드,컵)/2. 마이너 CUPS(1번~10번)/컵 10.jpg",
+    
+     // 궁정 카드 경로 - 완드
+     "Page_of_Wands": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/1.%20WANDS%28시종%2C기사%2C퀸%2C킹%29/1.%20완드%20시종.jpg",
+     "Knight_of_Wands": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/1.%20WANDS%28시종%2C기사%2C퀸%2C킹%29/2.%20완드%20기사.jpg",
+     "Queen_of_Wands": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/1.%20WANDS%28시종%2C기사%2C퀸%2C킹%29/3.%20완드%20퀸.jpg",
+     "King_of_Wands": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/1.%20WANDS%28시종%2C기사%2C퀸%2C킹%29/4.%20완드%20킹.jpg",
+     
+     // 궁정 카드 경로 - 컵
+     "Page_of_Cups": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/2.%20CUPS%28시종%2C기사%2C퀸%2C킹%29/1.%20컵%20시종.jpg",
+     "Knight_of_Cups": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/2.%20CUPS%28시종%2C기사%2C퀸%2C킹%29/2.%20컵%20기사.jpg",
+     "Queen_of_Cups": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/2.%20CUPS%28시종%2C기사%2C퀸%2C킹%29/3.%20컵%20퀸.jpg",
+     "King_of_Cups": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/2.%20CUPS%28시종%2C기사%2C퀸%2C킹%29/4.%20컵%20킹.jpg",
+     
+     // 궁정 카드 경로 - 소드
+     "Page_of_Swords": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/3.%20SWORDS%28시종%2C기사%2C퀸%2C킹%29/1.%20소드%20시종.jpg",
+     "Knight_of_Swords": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/3.%20SWORDS%28시종%2C기사%2C퀸%2C킹%29/2.%20소드%20기사.jpg",
+     "Queen_of_Swords": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/3.%20SWORDS%28시종%2C기사%2C퀸%2C킹%29/3.%20소드%20퀸.jpg",
+     "King_of_Swords": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/3.%20SWORDS%28시종%2C기사%2C퀸%2C킹%29/4.%20소드%20킹.jpg",
+     
+     // 궁정 카드 경로 - 펜타클
+     "Page_of_Pentacles": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/4.%20PENTACLES%28시종%2C기사%2C퀸%2C킹%29/1.%20펜타클%20시종.jpg",
+     "Knight_of_Pentacles": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/4.%20PENTACLES%28시종%2C기사%2C퀸%2C킹%29/2.%20펜타클%20기사.jpg",
+     "Queen_of_Pentacles": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/4.%20PENTACLES%28시종%2C기사%2C퀸%2C킹%29/3.%20펜타클%20퀸.jpg",
+     "King_of_Pentacles": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/4.%20PENTACLES%28시종%2C기사%2C퀸%2C킹%29/4.%20펜타클%20킹.jpg"
+};
 
-// 모달 창의 닫기 버튼 클릭 시 모달 창 닫기
-document.getElementsByClassName("close")[0].addEventListener("click", function() {
-    modal.style.display = "none";
-});
 
-// 모달 창 바깥 부분 클릭 시 모달 창 닫기
-window.addEventListener("click", function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+document.addEventListener("DOMContentLoaded", function() {
+    var modal = document.getElementById("fortuneModal");
+    var fortuneText = document.getElementById("fortune-text");
+    var copyButton = document.getElementById("copy-button");
+
+    // 점괘 보기 버튼 클릭 시 모달 창 열기
+    document.getElementById("show-fortune-button").addEventListener("click", function() {
+        var tarotReading = localStorage.getItem('tarotReading');
+        if (tarotReading) {
+            fortuneText.innerText = tarotReading;
+            modal.style.display = "block";  // 모달 창 열기
+        } else {
+            alert('타로 결과가 없습니다. 다시 시도해 주세요.');
+        }
+    });
+
+    // 모달 창의 닫기 버튼 클릭 시 모달 창 닫기
+    document.getElementsByClassName("close")[0].addEventListener("click", function() {
+        modal.style.display = "none";  // 모달 창 닫기
+    });
+
+    // 모달 창 바깥 부분 클릭 시 모달 창 닫기
+    window.addEventListener("click", function(event) {
+        if (event.target == modal) {  // 클릭한 요소가 모달인 경우
+            modal.style.display = "none";  // 모달 창 닫기
+        }
+    });
+
+    // 복사하기 버튼 클릭 시 텍스트 복사
+    copyButton.addEventListener("click", function() {
+        copyToClipboard(fortuneText.innerText);  // 텍스트 복사
+        copyButton.textContent = "복사 완료";  // 버튼 텍스트 변경
+        setTimeout(function() {
+            copyButton.textContent = "복사하기";  // 1초 후에 버튼 텍스트 복원
+        }, 1000);
+    });
+
+    // 클립보드에 텍스트 복사 함수
+    function copyToClipboard(text) {
+        var tempInput = document.createElement("input");  // 임시 입력 요소 생성
+        tempInput.style = "position: absolute; left: -1000px; top: -1000px";  // 화면에서 숨김
+        tempInput.value = text;  // 입력 요소에 텍스트 설정
+        document.body.appendChild(tempInput);  // 입력 요소를 문서에 추가
+        tempInput.select();  // 입력 요소 선택
+        document.execCommand("copy");  // 클립보드에 복사
+        document.body.removeChild(tempInput);  // 입력 요소 제거
+    }
+
+    // 페이지 로드 시 선택된 카드를 표시
+    var selectedCards = JSON.parse(localStorage.getItem('selectedCards'));
+    if (selectedCards && selectedCards.length > 0) {
+        showCards(selectedCards);
+    } else {
+        alert('선택된 타로 카드가 없습니다. 다시 시도해 주세요.');
     }
 });
 
-// 복사하기 버튼 클릭 시 텍스트 복사
-copyButton.addEventListener("click", function() {
-    copyToClipboard(fortuneText.innerText);
-    copyButton.textContent = "복사 완료";
-    setTimeout(function() {
-        copyButton.textContent = "복사하기";
-    }, 1000);
-});
-
-// 클립보드에 텍스트 복사 함수
-function copyToClipboard(text) {
-    var tempInput = document.createElement("input");
-    tempInput.style = "position: absolute; left: -1000px; top: -1000px";
-    tempInput.value = text;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    document.execCommand("copy");
-    document.body.removeChild(tempInput);
-}
 // "다시하기" 버튼
 document.getElementById("restart-button").addEventListener("click", function() {
-    window.location.href = "start.html";
+    window.location.href = "start.html";  // 시작 페이지로 이동
 });
 
 // "저장" 버튼
 document.getElementById("save-button").addEventListener("click", function() {
-    saveImage();
+    saveImage();  // 이미지 저장 함수 호출
 });
 
 // 이미지 저장 함수
 function saveImage() {
-    const container = document.querySelector(".container");
-    html2canvas(container).then(canvas => {
-        // 이미지 URL 생성
-        const image = canvas.toDataURL("image/png");
-        // 이미지를 다운로드
-        const link = document.createElement("a");
-        link.href = image;
-        link.download = "taro_result.png";
-        link.click();
+    const container = document.querySelector(".container");  // 컨테이너 요소 가져오기
+    html2canvas(container).then(canvas => {  // 컨테이너 요소를 캔버스로 변환
+        const image = canvas.toDataURL("image/png");  // 이미지 URL 생성
+        const link = document.createElement("a");  // 링크 요소 생성
+        link.href = image;  // 링크 요소에 이미지 URL 설정
+        link.download = "taro_result.png";  // 다운로드 파일 이름 설정
+        link.click();  // 링크 클릭으로 이미지 다운로드
     });
 }
 
-// 점괘 보기 버튼
-document.getElementById("show-fortune-button").addEventListener("click", function() {
-    const fortuneInfo = document.getElementById("fortune-info");
-    const fortuneText = document.getElementById("fortune-text"); // 수정된 부분
-    fortuneInfo.classList.toggle("hidden"); // 숨김/표시 토글
-    if (!fortuneInfo.classList.contains("hidden")) {
-        // 점괘 내용을 보여줄 때만 작업
-        // 여기에 점괘 내용을 표시하는 코드를 추가
-        fortuneText.innerText = "여기에 점괘 내용을 표시합니다."; // 수정된 부분
-    }
-});
-
-
-// 복사하기 버튼 클릭 이벤트 처리
-document.getElementById("copy-button").addEventListener("click", function() {
-    const copyButton = document.getElementById("copy-button");
-    const fortuneText = document.getElementById("fortune-text").innerText;
-    navigator.clipboard.writeText(fortuneText).then(function() {
-        console.log("복사되었습니다: " + fortuneText);
-        copyButton.innerText = "완료";
-        // 1초 후에 버튼 텍스트를 다시 "복사하기"로 변경
-        setTimeout(function() {
-            copyButton.innerText = "복사하기";
-        }, 1000);
-    }, function(err) {
-        console.error("복사 실패: ", err);
-        copyButton.innerText = "실패";
-        // 1초 후에 버튼 텍스트를 다시 "복사하기"로 변경
-        setTimeout(function() {
-            copyButton.innerText = "복사하기";
-        }, 1000);
-    });
-});
-
-// 클립보드에 텍스트 복사 함수
-function copyToClipboard(text) {
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textarea);
-}
-
-// 이미지 표시 함수
-function showImage(numOfImages) {
-    const imageContainer = document.getElementById("image-container");
-    imageContainer.innerHTML = ""; // 기존 이미지 삭제
-
-    for (let i = 0; i < numOfImages; i++) {
-        const image = document.createElement("img");
-        image.src = "your_image_url.jpg"; // 이미지 경로 지정
-        image.alt = "Your Image";
-        image.classList.add("image");
-        imageContainer.appendChild(image);
-    }
-}
-
-// 카드를 보여주는 함수
-function showCards(numOfCards, isMajor) {
+// 카드 이미지를 보여주는 함수
+function showCards(cards) {
     const cardContainer = document.getElementById("card-container");
-    cardContainer.innerHTML = ""; // 기존 카드 삭제
+    cardContainer.innerHTML = "";  // 기존 카드 삭제
 
-    const cardPath = isMajor ? "Major_card22/" : "Minor_card56/";
-    const cardList = []; // 중복 카드 방지를 위한 배열
-
-    while (cardList.length < numOfCards) {
-        const randomCard = getRandomCard(isMajor);
-        if (!cardList.includes(randomCard)) {
-            cardList.push(randomCard);
-            const card = document.createElement("img");
-            card.src = cardPath + randomCard + ".jpg";
-            card.alt = "타로 카드";
-            card.classList.add("card");
-            // 역방향 체크 여부에 따라 랜덤하게 뒤집기
-            if (document.getElementById("reverse-checkbox").checked && Math.random() < 0.3) {
-                card.classList.add("reversed");
-            }
-            cardContainer.appendChild(card);
+    cards.forEach(card => {
+        const cardElement = document.createElement("img");
+        cardElement.src = cardImagePaths[card.name];
+        cardElement.alt = "타로 카드";
+        cardElement.classList.add("card");
+        if (card.reversed) {
+            cardElement.classList.add("reversed");  // 역방향 클래스 추가
         }
-    }
+        cardContainer.appendChild(cardElement);
+    });
 }
 
-// 버튼 클릭 이벤트 리스너
-document.getElementById("one-card-button").addEventListener("click", function() {
-    showCards(1, !document.getElementById("major-minor-checkbox").checked); // 수정된 부분
-});
-
-document.getElementById("three-cards-button").addEventListener("click", function() {
-    showCards(3, !document.getElementById("major-minor-checkbox").checked); // 수정된 부분
-});
-
-document.getElementById("four-cards-button").addEventListener("click", function() {
-    showCards(4, !document.getElementById("major-minor-checkbox").checked); // 수정된 부분
-});
-
-document.getElementById("five-cards-button").addEventListener("click", function() {
-    showCards(5, !document.getElementById("major-minor-checkbox").checked); // 수정된 부분
-});
-
-// 역방향 체크박스 상태에 따라 이미지 회전
-document.getElementById("reverse-checkbox").addEventListener("change", function() {
-    const reverseCheckbox = document.getElementById("reverse-checkbox");
-    const cards = document.querySelectorAll(".card");
-
-    // 역방향 체크박스가 체크되었는지 확인
-    if (reverseCheckbox.checked) {
-        // 역방향일 경우 각 카드 이미지를 뒤집기
-        cards.forEach(card => {
-            if (Math.random() < 0.3) {
-                card.classList.add("reversed");
-            }
-        });
-    } else {
-        // 역방향이 아닐 경우 각 카드 이미지를 다시 되돌리기
-        cards.forEach(card => {
-            card.classList.remove("reversed");
-        });
+// 역방향 카드를 회전시키는 CSS 클래스 추가
+const style = document.createElement('style');
+style.innerHTML = `
+    .card.reversed {
+        transform: rotate(180deg);
     }
-});
-
-// 메이저/마이너 체크박스
-const majorMinorCheckbox = document.getElementById("major-minor-checkbox");
-const majorMinorButtons = document.querySelectorAll(".button-group button:not(#restart-button):not(#save-button):not(#show-fortune-button)");
-
-majorMinorCheckbox.addEventListener("change", function() {
-    if (majorMinorCheckbox.checked) {
-        majorMinorButtons.forEach(button => {
-            button.disabled = false;
-        });
-        majorMinorCheckbox.nextElementSibling.textContent = "활성화됨";
-    } else {
-        majorMinorButtons.forEach(button => {
-            button.disabled = false; // 버튼을 비활성화하는 대신 활성화 상태를 유지
-        });
-        majorMinorCheckbox.nextElementSibling.textContent = "";
-    }
-});
-
-// 랜덤 카드 선택 함수
-function getRandomCard(isMajor) {
-    const cardNames = isMajor ?
-        ["00_The_Fool", "01_The_Magician", "02_The_High_Priestess", "03_The_Empress", "04_The_Emperor",
-        "05_The_Hierophant", "06_The_Lovers", "07_The_Chariot", "08_Strength", "09_The_Hermit",
-        "10_Wheel_of_Fortune", "11_Justice", "12_The_Hanged_Man", "13_Death", "14_Temperance",
-        "15_The_Devil", "16_The_Tower", "17_The_Star", "18_The_Moon", "19_The_Sun",
-        "20_Judgement", "21_The_World"] :
-        ["00_The_Fool", "01_The_Magician", "02_The_High_Priestess", "03_The_Empress", "04_The_Emperor",
-        "05_The_Hierophant", "06_The_Lovers", "07_The_Chariot", "08_Strength", "09_The_Hermit",
-        "10_Wheel_of_Fortune", "11_Justice", "12_The_Hanged_Man", "13_Death", "14_Temperance",
-        "15_The_Devil", "16_The_Tower", "17_The_Star", "18_The_Moon", "19_The_Sun",
-        "20_Judgement", "21_The_World", "Ace_of_Cups", "Two_of_Cups", "Three_of_Cups", "Four_of_Cups", "Five_of_Cups", "Six_of_Cups",
-        "Seven_of_Cups", "Eight_of_Cups", "Nine_of_Cups", "Ten_of_Cups", "Page_of_Cups", "Knight_of_Cups",
-        "Queen_of_Cups", "King_of_Cups", "Ace_of_Pentacles", "Two_of_Pentacles", "Three_of_Pentacles",
-        "Four_of_Pentacles", "Five_of_Pentacles", "Six_of_Pentacles", "Seven_of_Pentacles", "Eight_of_Pentacles",
-        "Nine_of_Pentacles", "Ten_of_Pentacles", "Page_of_Pentacles", "Knight_of_Pentacles", "Queen_of_Pentacles",
-        "King_of_Pentacles", "Ace_of_Swords", "Two_of_Swords", "Three_of_Swords", "Four_of_Swords", "Five_of_Swords",
-        "Six_of_Swords", "Seven_of_Swords", "Eight_of_Swords", "Nine_of_Swords", "Ten_of_Swords", "Page_of_Swords",
-        "Knight_of_Swords", "Queen_of_Swords", "King_of_Swords", "Ace_of_Wands", "Two_of_Wands", "Three_of_Wands",
-        "Four_of_Wands", "Five_of_Wands", "Six_of_Wands", "Seven_of_Wands", "Eight_of_Wands", "Nine_of_Wands",
-        "Ten_of_Wands", "Page_of_Wands", "Knight_of_Wands", "Queen_of_Wands", "King_of_Wands"];
-
-    const randomIndex = Math.floor(Math.random() * cardNames.length);
-    return cardNames[randomIndex];
-}
+`;
+document.head.appendChild(style);
