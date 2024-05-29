@@ -21,8 +21,6 @@ window.onload = function() {
     }
     hideReverseButton();  // 역방향 버튼 숨김
     hideMajorMinorButton();  // 메이저와 마이너 버튼 숨김
-    updateReverseButtonText(); // 역방향 버튼 텍스트 초기화
-    updateMajorMinorButtonText(); // 메이저/마이너 버튼 텍스트 초기화
 };
 
 
@@ -36,8 +34,6 @@ document.getElementById("one-card-button").addEventListener("click", function() 
     hideMajorMinorButton();  // 메이저와 마이너 버튼 숨기기
     updateButtonOpacity(this);  // 선택된 버튼의 투명도 조절
     resetOtherButtonOpacity(this);  // 다른 버튼의 투명도 초기화
-    resetReverseButtonText(); // 다른 버튼을 누를 때 역방향 버튼 텍스트 초기화
-    resetMajorMinorButtonText(); // 다른 버튼을 누를 때 마이너 버튼 텍스트 초기화
 });
 
 document.getElementById("three-cards-button").addEventListener("click", function() {
@@ -49,8 +45,6 @@ document.getElementById("three-cards-button").addEventListener("click", function
     hideMajorMinorButton();  // 메이저와 마이너 버튼 숨기기
     updateButtonOpacity(this);  // 선택된 버튼의 투명도 조절
     resetOtherButtonOpacity(this);  // 다른 버튼의 투명도 초기화
-    resetReverseButtonText(); // 다른 버튼을 누를 때 역방향 버튼 텍스트 초기화
-    resetMajorMinorButtonText(); // 다른 버튼을 누를 때 마이너 버튼 텍스트 초기화
 });
 
 document.getElementById("four-cards-button").addEventListener("click", function() {
@@ -62,8 +56,6 @@ document.getElementById("four-cards-button").addEventListener("click", function(
     showMajorMinorButton();  // 메이저와 마이너 버튼 보이기
     updateButtonOpacity(this);  // 선택된 버튼의 투명도 조절
     resetOtherButtonOpacity(this);  // 다른 버튼의 투명도 초기화
-    resetReverseButtonText(); // 다른 버튼을 누를 때 역방향 버튼 텍스트 초기화
-    resetMajorMinorButtonText(); // 다른 버튼을 누를 때 마이너 버튼 텍스트 초기화
 });
 
 document.getElementById("five-cards-button").addEventListener("click", function() {
@@ -75,8 +67,6 @@ document.getElementById("five-cards-button").addEventListener("click", function(
     showMajorMinorButton();  // 메이저와 마이너 버튼 보이기
     updateButtonOpacity(this);  // 선택된 버튼의 투명도 조절
     resetOtherButtonOpacity(this);  // 다른 버튼의 투명도 초기화
-    resetReverseButtonText(); // 다른 버튼을 누를 때 역방향 버튼 텍스트 초기화
-    resetMajorMinorButtonText(); // 다른 버튼을 누를 때 마이너 버튼 텍스트 초기화
 });
 
 function resetOtherButtonOpacity(selectedButton) {
@@ -86,38 +76,6 @@ function resetOtherButtonOpacity(selectedButton) {
             button.style.opacity = 0.5;  // 선택되지 않은 버튼은 투명도를 초기화
         }
     });
-}
-
-// 다른 버튼을 눌렀을 때 역방향 버튼 텍스트 초기화 함수
-function resetReverseButtonText() {
-    const button = document.getElementById("reverse-button");
-    button.textContent = "역방향 미사용";
-}
-
-// 다른 버튼을 눌렀을 때 메이저/마이너 버튼 텍스트 초기화 함수
-function resetMajorMinorButtonText() {
-    const button = document.getElementById("major-minor-button");
-    button.textContent = "메이저만 사용";
-}
-
-// 역방향 버튼 텍스트 변경 함수
-function updateReverseButtonText() {
-    const button = document.getElementById("reverse-button");
-    if (reverseMode) {
-        button.textContent = "역방향 사용";
-    } else {
-        button.textContent = "역방향 미사용";
-    }
-}
-
-// 메이저/마이너 버튼 텍스트 변경 함수
-function updateMajorMinorButtonText() {
-    const button = document.getElementById("major-minor-button");
-    if (majorSelected) {
-        button.textContent = "메이저/마이너 사용";
-    } else {
-        button.textContent = "메이저만 사용";
-    }
 }
 
 function resetCardSelection() {
