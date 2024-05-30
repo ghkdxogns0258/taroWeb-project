@@ -32,3 +32,6 @@ jobs:
     - name: Restart PM2
       run: |
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@52.79.240.250 "pm2 restart taroWeb"
+
+
+  
