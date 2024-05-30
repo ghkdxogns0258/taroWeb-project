@@ -14,7 +14,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3  # 최신 버전으로 업데이트
 
     - name: Setup SSH
       run: |
@@ -25,10 +25,8 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./ ec2-user@52.79.240.250:/home/ec2-user/taroWeb-project
-      env:
-        RSYNC_RSH: "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no"
+        rsync -avz -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa" ./ ec2-user@52.79.240.250:/home/ec2-user/taroWeb-project
 
     - name: Restart PM2
       run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@52.79.240.250 "pm2 restart taroWeb"
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@52.79.240.250 "pm2 restart taroWeb"
