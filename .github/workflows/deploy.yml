@@ -1,0 +1,31 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H your-ec2-public-ip >> ~/.ssh/known_hosts
+
+    - name: Deploy to EC2
+      run: |
+        rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./ ec2-user@your-ec2-public-ip:/home/ec2-user/taroWeb-project
+      env:
+        RSYNC_RSH: "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no"
+
+    - name: Restart PM2
+      run: |
+        ssh -o StrictHostKeyChecking=no ec2-user@your-ec2-public-ip "pm2 restart taroWeb"
