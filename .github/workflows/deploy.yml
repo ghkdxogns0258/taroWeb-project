@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   deploy:
@@ -22,10 +25,10 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./ ec2-user@your-ec2-public-ip:/home/ec2-user/taroWeb-project
+        rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./ ec2-user@52.79.240.250:/home/ec2-user/taroWeb-project
       env:
         RSYNC_RSH: "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no"
 
     - name: Restart PM2
       run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@your-ec2-public-ip "pm2 restart taroWeb"
+        ssh -o StrictHostKeyChecking=no ec2-user@52.79.240.250 "pm2 restart taroWeb"
