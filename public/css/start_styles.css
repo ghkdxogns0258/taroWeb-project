@@ -16,6 +16,12 @@ header {
     text-align: center;
 }
 
+.mbti-image {
+    width: 100px; /* 원하는 이미지 너비로 설정 */
+    height: auto; /* 비율을 유지하면서 높이 자동 조정 */
+    margin-bottom: 20px; /* 이미지와 제목 사이에 여백 추가 */
+}
+
 h1 {
     font-size: 48px; /* 큰 글자 크기 */
     color: #e5b969; /* 주황색 */
@@ -28,4 +34,25 @@ h2 {
     color: #ffa600; /* 주황색 */
     font-weight: bold; /* 굵은 글꼴 */
     margin: 0;
+}
+
+/* 모바일 버전 */
+@media screen and (max-width: 800px) {
+    h1 {
+        font-size: 144px; /* 데스크탑용 큰 글자 크기 */
+    }
+
+    h2 {
+        font-size: 72px; /* 데스크탑용 큰 글자 크기 */
+    }
+
+    .mbti-image {
+        width: 300px; /* 원하는 이미지 너비로 설정 */
+        height: auto; /* 비율을 유지하면서 높이 자동 조정 */
+        margin-bottom: 20px; /* 이미지와 제목 사이에 여백 추가 */
+    }
+}
+
+@media screen and (min-width: 800px){
+
 }
