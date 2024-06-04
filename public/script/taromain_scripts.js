@@ -319,5 +319,7 @@ function drawCards() {
 
 function showDrawCardButton() {
     const drawCardButton = document.getElementById("draw-card-button");
+    const clickPrompt = document.getElementById("click-prompt");
     drawCardButton.style.display = "block";  // 카드 뽑기 버튼 표시
+    clickPrompt.style.display = "block"; // 글자 폰트
 }
