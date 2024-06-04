@@ -4,22 +4,22 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1400px; /* 중앙 정렬 */
     margin: 20px auto; /* 중앙 정렬 */
     display: flex;
     flex-direction: row-reverse; /* 좌우 반전 */
 }
 
-.left-container {
-    flex: 1; /* 좌측 컨테이너 너비를 21 중 1로 설정 */
+.right-container {
+    flex: 1; /*우측 컨테이너 너비를 21 중 1로 설정 */
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.right-container {
-    flex: 2; /* 우측 컨테이너 너비를 2:1 중 2로 조정 */
+.left-container {
+    flex: 2; /*좌측 컨테이너 너비를 2:1 중 2로 조정 */
     background-image: url('https://tarowebproject.s3.amazonaws.com/%ED%83%80%EB%A1%9C%20%EB%B0%B0%EA%B2%BD/taro_background.jpg'); /* 이미지 경로 설정 */
     background-size: cover; /* 배경 이미지를 컨테이너에 맞게 확대/축소 */
     background-position: center; /* 배경 이미지를 가운데 정렬 */
@@ -28,30 +28,50 @@ body {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬 */
+    justify-content: center; /* 수평 가운데 정렬 */
+    flex-direction: column;
 }
 
 h2 {
     text-align: center;
+    font-size: 42px;
     margin-top: 0;
     color: orange; /* 주황색으로 변경 */
 }
 
-.button-group {
+.button-group,
+.button-group2 {
     text-align: right; /* 버튼 그룹을 우측 정렬 */
     margin-top: 20px;
 }
 
-.button-group button {
-    display: block; /* 버튼을 블록 요소로 설정하여 위에서 아래로 배치 */
+.button-group button{
+    padding: 20px 30px; /* 크기를 두 배로 키움 */
+    font-size: 24px;
+    margin-bottom: 10px; /* 버튼 사이 간격 조정 */
+}
+
+.button-group2 button{
     padding: 10px 20px;
     font-size: 16px;
+    margin-bottom: 10px; /* 버튼 사이 간격 조정 */
+}
+
+.button-group button,
+.button-group2 button {
+    display: block; /* 버튼을 블록 요소로 설정하여 위에서 아래로 배치 */
     border-radius: 5px;
     cursor: pointer;
-    margin-bottom: 10px; /* 버튼 사이 간격 조정 */
     background-color: #007bff;
     color: #fff;
     border: none;
     position: relative; /* 상대적 위치 지정 */
+}
+
+.button-group2 button {
+    visibility: hidden;
 }
 
 .button-group button:last-child {
@@ -71,25 +91,10 @@ h2 {
     color: green; /* 활성화 색상 지정 */
 }
 
-/* 역방향 체크박스 */
-.checkbox.reverse-checkbox {
-    position: fixed; /* 고정 위치 */
-    right: 30px; /* 오른쪽 여백 조정 */
-    bottom: 30px; /* 하단 여백 조정 */
-    color: white;
-    transform: translateY(50%); /* 세로 중앙 정렬 */
+/*체크박스*/
+.checkbox {
+    visibility: hidden;
 }
-
-/* 메이저/마이너 체크박스 */
-.checkbox.major-minor-checkbox {
-    position: fixed; /* 고정 위치 */
-    right: 30px; /* 오른쪽 여백 조정 */
-    bottom: 10px; /* 하단 여백 조정 */
-    color: white;
-    transform: translateY(50%); /* 세로 중앙 정렬 */
-}
-
-
 
 #save-button {
     background-color: #007bff;
@@ -103,7 +108,7 @@ h2 {
 
 /* 카드 이미지 스타일 */
 .card {
-    max-width: 100px; /* 카드 이미지의 최대 너비를 조정 */
+    max-width: 140px; /* 카드 이미지의 최대 너비를 조정 */
     height: auto; /* 높이 자동 조정 */
     margin-right: 10px; /* 각 카드 이미지 사이의 간격을 조정 */
 }
@@ -190,4 +195,64 @@ h2 {
 
 #copy-button:hover {
     background-color: #45a049;
+}
+
+/*데스크탑*/
+@media screen and (min-width: 800px){
+
+}
+
+/*모바일*/
+@media only screen and (max-width: 800px) {
+    .container {
+        max-width: 1200px;
+        margin: 20px auto; /* 중앙 정렬 */
+        display: flex;
+        flex-direction: column-reverse; /* 상하 반전 */
+        align-items: center; /* 수직 가운데 정렬 */
+    }
+
+    .right-container,
+    .left-container {
+        width: 100%;
+        max-width: 70%; /* 모바일 화면에 최대 90%만 사용하도록 설정 */
+        padding: 20px; /* 좌측 컨테이너의 padding을 줄여 공간 활용 */
+    }
+
+    .left-container {
+    flex: 2;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 120px;
+    }
+
+    h2 {
+        font-size: 48px;
+    }
+
+    #image-container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px; /* 이미지와 아래 요소 간 간격 조정 */
+    }
+
+    .card {
+        max-width: 160px;
+    }
+
+    .close {
+        font-size: 72px; /* X 버튼의 폰트 크기를 조정합니다. */
+    }
+    
+    #copy-button {
+        padding: 20px 40px; /* 버튼의 패딩을 조정합니다. */
+        font-size: 24px; /* 폰트 크기를 조정합니다. */
+    }
+
+    .button-group2 button {
+        display: none;
+    }
+    
 }

@@ -167,7 +167,7 @@ function updateSelectedCards() {
 
     // 선택 가능한 카드 개수 표시
     const selectedCountText = document.getElementById("selected-count");
-    selectedCountText.textContent = `선택할 수 있는 카드의 개수: ${availableCards - selectedCards}`;
+    selectedCountText.textContent = `남은 카드의 개수: ${availableCards - selectedCards}`;
 
     // 결과 확인 버튼 표시 여부 업데이트
     updateSubmitButton();

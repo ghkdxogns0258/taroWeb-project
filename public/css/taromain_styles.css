@@ -1,7 +1,14 @@
 body {
+    font-family: Arial, sans-serif;
     background-color: #232d32;
-    background-image: none;
-    background-size: cover;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    min-height: 100vh;
+    transform: scale(1.2); /* 전체를 1.2배 확대 */
+    transform-origin: center center; /* 확대 기준점을 가운데로 설정 */
 }
 .container {
     max-width: 600px;
@@ -46,4 +53,72 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+}
+
+/*카드를 클릭하세요 폰트*/
+#click-prompt {
+    display: none;
+    margin-top: 30px; /* 상단 여백을 크게 조정합니다 */
+    font-size: 18px; /* 글자 크기를 줄입니다 */
+    color: #FFA500;
+    text-align: center; /* 텍스트를 가운데 정렬합니다 */
+}
+/*데스크탑*/
+@media screen and (min-width: 800px){
+
+}
+
+/* 모바일 버전 */
+@media screen and (max-width: 800px) {
+    body{
+        transform: none;
+    }
+    
+    h1 {
+        font-size: 50px; /* 원하는 크기로 조정하세요 */
+        
+    }
+    
+    .container {
+        max-width: 800px; /* 컨테이너의 최대 너비를 늘립니다 */
+        display: flex;
+        flex-direction: column; /* 요소들을 세로로 정렬합니다 */
+        align-items: center; /* 수직 중앙 정렬 */
+        background-color: #232d32; /* 컨테이너 배경색 */
+        border-radius: 12px; /* 컨테이너 모서리를 둥글게 만듭니다 */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    }
+
+    .button-group {
+        width: 100%; /* 부모 요소에 맞게 버튼 그룹 너비를 설정합니다 */
+    }
+
+    .button-group button {
+        padding: 15px 20px; /* 버튼 내부 여백을 늘립니다 */
+        font-size: 40px; /* 버튼 글자 크기를 키웁니다 */
+        border-radius: 10px;
+        border: 4px solid #FFA500;
+    }
+
+    #selected-card-info {
+        margin-top: 40px; /* 위쪽 여백을 늘립니다 */
+        font-size: 360px; /* 글자 크기를 크게 키웁니다 */
+        text-align: center; /* 텍스트를 중앙으로 정렬합니다 */
+    }
+    
+    #draw-card-button {
+        margin-top: 30px; /* 위쪽 여백을 늘립니다 */
+        width: 250px; /* 너비를 크게 설정합니다 */
+        height: 380px; /* 높이를 크게 설정합니다 */
+        position: relative;
+        transform: scale(1.1); /* 1.2배 확대 */
+    }
+    
+    #click-prompt {
+        display: none;
+        margin-top: 30px; /* 상단 여백을 크게 조정합니다 */
+        font-size: 48px; /* 글자 크기를 크게 키웁니다 */
+        color: #FFA500;
+        text-align: center; /* 텍스트를 중앙으로 정렬합니다 */
+    }
 }
