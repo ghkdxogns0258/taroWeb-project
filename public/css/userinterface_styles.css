@@ -5,14 +5,15 @@ body {
     padding: 20;
     display: flex;
     justify-content: center; /* 수평 중앙 정렬 */
-    min-height: 100vh;
 }
 
 .container {
     max-width: 550px; /* 컨테이너의 최대 너비를 조정합니다 */
+    overflow: auto;
     margin: 0 auto; /* 가로 중앙 정렬을 유지합니다 */
     background-color: #fff;
-    padding: 20px;
+    padding: 60px 20px;
+    margin: 20px auto; /* 수평 중앙 정렬 */
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -86,13 +87,9 @@ label[for="fortune"]{
 .mbti-test-button:hover {
     background-color: #45a049; /* 더 진한 초록색 */
 }
-/*데스크탑*/
-@media screen and (min-width: 2600px){
-
-}
 
 /* 모바일 스타일 */
-@media screen and (min-width: 2600px) {
+@media screen and (hover: none) and (pointer: coarse) {
     .container {
         max-width: 100%; /* 모바일 화면의 가로폭을 넓혀줍니다 */
         padding: 60px; /* 컨테이너 안의 간격을 늘려줍니다 */
@@ -102,13 +99,14 @@ label[for="fortune"]{
     h1 {
         font-size: 60px; /* h2의 폰트 크기를 두 배로 키웁니다 */
         margin-top: -20px; /* h1을 위로 올립니다 */
+        margin-bottom: 40px;
     }
 
     .form-group {
-        margin-bottom: 40px; /* 폼 그룹 간격을 늘려줍니다 */
+        margin-bottom: 50px; /* 폼 그룹 간격을 늘려줍니다 */
     }
     .form-group label {
-        font-size: 36px; /* 라벨의 폰트 크기를 더 키웁니다 */
+        font-size: 40px; /* 라벨의 폰트 크기를 더 키웁니다 */
         margin-bottom: 10px; /* 라벨 아래 간격을 늘려줍니다 */
     }
     .form-group input[type="text"],
@@ -128,19 +126,24 @@ label[for="fortune"]{
     
     .form-group select {
         padding: 20px; /* 선택창의 패딩을 늘려줍니다 */
-        font-size: 32px; /* 선택창의 폰트 크기를 키웁니다 */
+        font-size: 36px; /* 선택창의 폰트 크기를 키웁니다 */
         border-radius: 10px; /* 선택창의 모서리를 둥글게 만듭니다 */
     }
     .form-group select option {
-        font-size: 20px; /* 선택지의 폰트 크기를 별도로 설정합니다 */
+        font-size: 15px; /* 선택지의 폰트 크기를 별도로 설정합니다 */
     }
     .submit-button {
         padding: 20px 40px; /* 버튼의 패딩을 늘려줍니다 */
-        font-size: 36px; /* 버튼의 폰트 크기를 키웁니다 */
+        font-size: 40px; /* 버튼의 폰트 크기를 키웁니다 */
     }
     .mbti-test-button {
         padding: 20px 40px; /* 버튼의 패딩을 늘려줍니다 */
-        font-size: 36px; /* 버튼의 폰트 크기를 키웁니다 */
+        font-size: 40px; /* 버튼의 폰트 크기를 키웁니다 */
         margin-top: 20px; /* 버튼 위 간격을 늘려줍니다 */
+        margin-bottom: 40px;
+    }
+    .submit-button {
+        padding: 20px 40px;
+        margin-bottom: 60px; /* 제출 버튼 아래 여백 추가 */
     }
 }
