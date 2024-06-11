@@ -308,13 +308,18 @@ function getRandomCard(isMajor) {
 // 카드 뽑기 함수
 function drawCards() {
     selectedCards = [];
-    for (let i = 0; i < selectedCardCount; i++) {
+    const drawnCardSet = new Set(); // 중복 방지를 위한 Set
+    
+    while (selectedCards.length < selectedCardCount) {
         const card = getRandomCard(majorMinorMode !== "major");
-        const isReversed = Math.random() < 0.5;  // 역방향 여부를 랜덤으로 결정
-        selectedCards.push({ name: card, reversed: isReversed });
+        if (!drawnCardSet.has(card)) { // 중복 확인
+            drawnCardSet.add(card);
+            const isReversed = reverseMode && Math.random() < 0.5; // 역방향 여부를 랜덤으로 결정
+            selectedCards.push({ name: card, reversed: isReversed });
+        }
     }
-    console.log("Drawn cards:", selectedCards);  // 디버깅을 위해 출력
-    updateSelectedCardInfo();  // 선택된 카드 정보 업데이트
+    console.log("Drawn cards:", selectedCards); // 디버깅을 위해 출력
+    updateSelectedCardInfo(); // 선택된 카드 정보 업데이트
 }
 
 function showDrawCardButton() {

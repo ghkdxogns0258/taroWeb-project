@@ -104,50 +104,44 @@ document.addEventListener("DOMContentLoaded", function() {
     var fortuneText = document.getElementById("fortune-text");
     var copyButton = document.getElementById("copy-button");
 
-    // 점괘 보기 버튼 클릭 시 모달 창 열기
     document.getElementById("show-fortune-button").addEventListener("click", function() {
         var tarotReading = localStorage.getItem('tarotReading');
         if (tarotReading) {
             fortuneText.innerText = tarotReading;
-            modal.style.display = "block";  // 모달 창 열기
+            modal.style.display = "block";
         } else {
             alert('타로 결과가 없습니다. 다시 시도해 주세요.');
         }
     });
 
-    // 모달 창의 닫기 버튼 클릭 시 모달 창 닫기
     document.getElementsByClassName("close")[0].addEventListener("click", function() {
-        modal.style.display = "none";  // 모달 창 닫기
+        modal.style.display = "none";
     });
 
-    // 모달 창 바깥 부분 클릭 시 모달 창 닫기
     window.addEventListener("click", function(event) {
-        if (event.target == modal) {  // 클릭한 요소가 모달인 경우
-            modal.style.display = "none";  // 모달 창 닫기
+        if (event.target == modal) {
+            modal.style.display = "none";
         }
     });
 
-    // 복사하기 버튼 클릭 시 텍스트 복사
     copyButton.addEventListener("click", function() {
-        copyToClipboard(fortuneText.innerText);  // 텍스트 복사
-        copyButton.textContent = "복사 완료";  // 버튼 텍스트 변경
+        copyToClipboard(fortuneText.innerText);
+        copyButton.textContent = "복사 완료";
         setTimeout(function() {
-            copyButton.textContent = "복사하기";  // 1초 후에 버튼 텍스트 복원
+            copyButton.textContent = "복사하기";
         }, 1000);
     });
 
-    // 클립보드에 텍스트 복사 함수
     function copyToClipboard(text) {
-        var tempInput = document.createElement("input");  // 임시 입력 요소 생성
-        tempInput.style = "position: absolute; left: -1000px; top: -1000px";  // 화면에서 숨김
-        tempInput.value = text;  // 입력 요소에 텍스트 설정
-        document.body.appendChild(tempInput);  // 입력 요소를 문서에 추가
-        tempInput.select();  // 입력 요소 선택
-        document.execCommand("copy");  // 클립보드에 복사
-        document.body.removeChild(tempInput);  // 입력 요소 제거
+        var tempInput = document.createElement("input");
+        tempInput.style = "position: absolute; left: -1000px; top: -1000px";
+        tempInput.value = text;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
     }
 
-    // 페이지 로드 시 선택된 카드를 표시
     var selectedCards = JSON.parse(localStorage.getItem('selectedCards'));
     if (selectedCards && selectedCards.length > 0) {
         showCards(selectedCards);
@@ -156,32 +150,29 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-// "다시하기" 버튼
 document.getElementById("restart-button").addEventListener("click", function() {
-    window.location.href = "start.html";  // 시작 페이지로 이동
+    deleteUserData(); // "다시하기" 버튼 클릭 시 데이터 삭제
+    window.location.href = "start.html";
 });
 
-// "저장" 버튼
 document.getElementById("save-button").addEventListener("click", function() {
-    saveImage();  // 이미지 저장 함수 호출
+    saveImage();
 });
 
-// 이미지 저장 함수
 function saveImage() {
-    const container = document.querySelector(".container");  // 컨테이너 요소 가져오기
-    html2canvas(container).then(canvas => {  // 컨테이너 요소를 캔버스로 변환
-        const image = canvas.toDataURL("image/png");  // 이미지 URL 생성
-        const link = document.createElement("a");  // 링크 요소 생성
-        link.href = image;  // 링크 요소에 이미지 URL 설정
-        link.download = "taro_result.png";  // 다운로드 파일 이름 설정
-        link.click();  // 링크 클릭으로 이미지 다운로드
+    const container = document.querySelector(".container");
+    html2canvas(container).then(canvas => {
+        const image = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.href = image;
+        link.download = "taro_result.png";
+        link.click();
     });
 }
 
-// 카드 이미지를 보여주는 함수
 function showCards(cards) {
     const cardContainer = document.getElementById("card-container");
-    cardContainer.innerHTML = "";  // 기존 카드 삭제
+    cardContainer.innerHTML = "";
 
     cards.forEach(card => {
         const cardElement = document.createElement("img");
@@ -189,13 +180,12 @@ function showCards(cards) {
         cardElement.alt = "타로 카드";
         cardElement.classList.add("card");
         if (card.reversed) {
-            cardElement.classList.add("reversed");  // 역방향 클래스 추가
+            cardElement.classList.add("reversed");
         }
         cardContainer.appendChild(cardElement);
     });
 }
 
-// 역방향 카드를 회전시키는 CSS 클래스 추가
 const style = document.createElement('style');
 style.innerHTML = `
     .card.reversed {
@@ -203,3 +193,37 @@ style.innerHTML = `
     }
 `;
 document.head.appendChild(style);
+
+// 사용자 데이터를 삭제하는 함수
+function deleteUserData() {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+        fetch(`/api/users/${userId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                localStorage.removeItem('userId');
+                localStorage.removeItem('tarotReading');
+                localStorage.removeItem('selectedCards');
+                localStorage.removeItem('tarotSelection');
+                localStorage.removeItem('reverseMode');
+                localStorage.removeItem('majorMinorMode');
+                localStorage.removeItem('selectedCardCount');
+            } else {
+                alert('사용자 데이터를 삭제하는데 실패했습니다.');
+            }
+        })
+        .catch(error => {
+            alert('서버 오류: ' + error);
+        });
+    }
+}
+
+// 창을 닫을 때 사용자 데이터를 삭제하는 이벤트 추가
+window.addEventListener("beforeunload", function(event) {
+    deleteUserData();
+});
