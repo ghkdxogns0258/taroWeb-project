@@ -74,28 +74,28 @@ const cardImagePaths = {
     "Ten_of_Cups": s3BucketUrl + "마이너(완드,컵)/2. 마이너 CUPS(1번~10번)/컵 10.jpg",
     
      // 궁정 카드 경로 - 완드
-     "Page_of_Wands": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/1.%20WANDS%28시종%2C기사%2C퀸%2C킹%29/1.%20완드%20시종.jpg",
-     "Knight_of_Wands": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/1.%20WANDS%28시종%2C기사%2C퀸%2C킹%29/2.%20완드%20기사.jpg",
-     "Queen_of_Wands": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/1.%20WANDS%28시종%2C기사%2C퀸%2C킹%29/3.%20완드%20퀸.jpg",
-     "King_of_Wands": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/1.%20WANDS%28시종%2C기사%2C퀸%2C킹%29/4.%20완드%20킹.jpg",
-     
-     // 궁정 카드 경로 - 컵
-     "Page_of_Cups": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/2.%20CUPS%28시종%2C기사%2C퀸%2C킹%29/1.%20컵%20시종.jpg",
-     "Knight_of_Cups": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/2.%20CUPS%28시종%2C기사%2C퀸%2C킹%29/2.%20컵%20기사.jpg",
-     "Queen_of_Cups": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/2.%20CUPS%28시종%2C기사%2C퀸%2C킹%29/3.%20컵%20퀸.jpg",
-     "King_of_Cups": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/2.%20CUPS%28시종%2C기사%2C퀸%2C킹%29/4.%20컵%20킹.jpg",
-     
-     // 궁정 카드 경로 - 소드
-     "Page_of_Swords": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/3.%20SWORDS%28시종%2C기사%2C퀸%2C킹%29/1.%20소드%20시종.jpg",
-     "Knight_of_Swords": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/3.%20SWORDS%28시종%2C기사%2C퀸%2C킹%29/2.%20소드%20기사.jpg",
-     "Queen_of_Swords": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/3.%20SWORDS%28시종%2C기사%2C퀸%2C킹%29/3.%20소드%20퀸.jpg",
-     "King_of_Swords": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/3.%20SWORDS%28시종%2C기사%2C퀸%2C킹%29/4.%20소드%20킹.jpg",
-     
-     // 궁정 카드 경로 - 펜타클
-     "Page_of_Pentacles": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/4.%20PENTACLES%28시종%2C기사%2C퀸%2C킹%29/1.%20펜타클%20시종.jpg",
-     "Knight_of_Pentacles": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/4.%20PENTACLES%28시종%2C기사%2C퀸%2C킹%29/2.%20펜타클%20기사.jpg",
-     "Queen_of_Pentacles": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/4.%20PENTACLES%28시종%2C기사%2C퀸%2C킹%29/3.%20펜타클%20퀸.jpg",
-     "King_of_Pentacles": s3BucketUrl + "궁정%2C코트카드%28완드%2C컵%2C소드%2C펜타클%29/4.%20PENTACLES%28시종%2C기사%2C퀸%2C킹%29/4.%20펜타클%20킹.jpg"
+    "Page_of_Wands": s3BucketUrl + "궁정,코트카드(완드,컵,소드,펜타클)/1. WANDS(시종,기사,퀸,킹)/1. 완드 시종.jpg",
+    "Knight_of_Wands": s3BucketUrl + "궁정,코트카드(완드,컵,소드,펜타클)/1. WANDS(시종,기사,퀸,킹)/2. 완드 기사.jpg",
+    "Queen_of_Wands": s3BucketUrl + "궁정,코트카드(완드,컵,소드,펜타클)/1. WANDS(시종,기사,퀸,킹)/3. 완드 퀸.jpg",
+    "King_of_Wands": s3BucketUrl + "궁정,코트카드(완드,컵,소드,펜타클)/1. WANDS(시종,기사,퀸,킹)/4. 완드 킹.jpg",
+
+    // 궁정 카드 경로 - 컵
+    "Page_of_Cups": s3BucketUrl + "궁정,코트카드(완드,컵,소드,펜타클)/2. CUPS(시종,기사,퀸,킹)/1. 컵 시종.jpg",
+    "Knight_of_Cups": s3BucketUrl + "궁정,코트카드(완드,컵,소드,펜타클)/2. CUPS(시종,기사,퀸,킹)/2. 컵 기사.jpg",
+    "Queen_of_Cups": s3BucketUrl + "궁정,코트카드(완드,컵,소드,펜타클)/2. CUPS(시종,기사,퀸,킹)/3. 컵 퀸.jpg",
+    "King_of_Cups": s3BucketUrl + "궁정,코트카드(완드,컵,소드,펜타클)/2. CUPS(시종,기사,퀸,킹)/4. 컵 킹.jpg",
+
+    // 궁정 카드 경로 - 소드
+    "Page_of_Swords": s3BucketUrl + "궁정,코트카드(완드,컵,소드,펜타클)/3. SWORDS(시종,기사,퀸,킹)/1. 소드 시종.jpg",
+    "Knight_of_Swords": s3BucketUrl + "궁정,코트카드(완드,컵,소드,펜타클)/3. SWORDS(시종,기사,퀸,킹)/2. 소드 기사.jpg",
+    "Queen_of_Swords": s3BucketUrl + "궁정,코트카드(완드,컵,소드,펜타클)/3. SWORDS(시종,기사,퀸,킹)/3. 소드 퀸.jpg",
+    "King_of_Swords": s3BucketUrl + "궁정,코트카드(완드,컵,소드,펜타클)/3. SWORDS(시종,기사,퀸,킹)/4. 소드 킹.jpg",
+
+    // 궁정 카드 경로 - 펜타클
+    "Page_of_Pentacles": s3BucketUrl + "궁정,코트카드(완드,컵,소드,펜타클)/4. PENTACLES(시종,기사,퀸,킹)/1. 펜타클 시종.jpg",
+    "Knight_of_Pentacles": s3BucketUrl + "궁정,코트카드(완드,컵,소드,펜타클)/4. PENTACLES(시종,기사,퀸,킹)/2. 펜타클 기사.jpg",
+    "Queen_of_Pentacles": s3BucketUrl + "궁정,코트카드(완드,컵,소드,펜타클)/4. PENTACLES(시종,기사,퀸,킹)/3. 펜타클 퀸.jpg",
+    "King_of_Pentacles": s3BucketUrl + "궁정,코트카드(완드,컵,소드,펜타클)/4. PENTACLES(시종,기사,퀸,킹)/4. 펜타클 킹.jpg"
 };
 
 
