@@ -159,8 +159,8 @@ document.getElementById("save-button").addEventListener("click", function() {
     saveImage();
 });
 
-function saveImage() {
-    const container = document.querySelector(".left-container"); // 좌측 컨테이너 선택
+function saveImage(
+  const container = document.querySelector(".left-container"); // 좌측 컨테이너 선택
 
     html2canvas(container, {
         useCORS: true, // CORS 사용
