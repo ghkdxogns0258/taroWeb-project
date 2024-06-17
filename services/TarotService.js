@@ -21,7 +21,11 @@ exports.performReading = async (userId, selectedCards, reverse = false, majorMin
 // 사용자 정보와 카드 정보를 바탕으로 ChatGPT 프롬프트 문자열을 생성하는 함수
 function createPrompt(user, cardName, direction, majorMinor) {
   return `
-  Perform a tarot reading for the following user:
+  Please create a text for tarot results.
+  First, let's start with a greeting to the user. ex) Hello, this is the tarot interpretation of ${user.fortune} from ${user.name}.
+  Then, for each card, provide a simple interpretation by considering ${user.fortune} and ${user.mbti} according to one of the tarot card spreads, ${user.tarotSelection}.
+  Lastly, please provide a personal and comprehensive tarot result for ${user.fortune} considering the user's ${user.mbti}.
+  The information needed to see tarot dots will be described below:
 
   - Name: ${user.name}
   - Birthdate: ${user.birthdate}
@@ -33,10 +37,6 @@ function createPrompt(user, cardName, direction, majorMinor) {
   - Card: ${cardName}
   - Direction: ${direction}
   - Major/Minor: ${majorMinor}
-
-  The user is interested in the following type of fortune: ${user.fortune}.
-  The user has selected the following tarot reading method: ${user.tarotSelection}.
-  Considering the user's MBTI type (${user.mbti}), provide a personalized tarot reading interpretation. 
-  Explain how the card's meaning might be particularly relevant or interpreted for someone with this MBTI type and how it applies to the fortune type they are interested in.
+  
   `;
 }
