@@ -9,7 +9,7 @@ exports.getReading = async (prompt) => {
         { role: 'system', content: 'You are a tarot reading assistant who provides responses in Korean.' },
         { role: 'user', content: prompt }
       ],
-      max_tokens: 800  // 최대 토큰 수 설정
+      max_tokens: 1800  // 최대 토큰 수 설정
     }, {
       headers: { 'Authorization': `Bearer ${process.env.CHATGPT_API_KEY}` }  // 환경 변수에서 API 키를 가져와 헤더에 추가
     });

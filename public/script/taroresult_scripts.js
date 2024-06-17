@@ -160,13 +160,19 @@ document.getElementById("save-button").addEventListener("click", function() {
 });
 
 function saveImage() {
-    const container = document.querySelector(".container");
-    html2canvas(container).then(canvas => {
+    const container = document.querySelector(".left-container"); // 좌측 컨테이너 선택
+
+    html2canvas(container, {
+        useCORS: true, // CORS 사용
+        logging: true // 로그 활성화
+    }).then(canvas => {
         const image = canvas.toDataURL("image/png");
         const link = document.createElement("a");
         link.href = image;
         link.download = "taro_result.png";
         link.click();
+    }).catch(error => {
+        console.error("Error capturing the image: ", error);
     });
 }
 
