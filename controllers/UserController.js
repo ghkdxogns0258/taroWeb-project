@@ -77,3 +77,16 @@ exports.updateTarotInfo = async (req, res) => {
         res.status(500).send({ message: "Failed to update user tarot info", error: error.message });
     }
 };
+// 사용자 정보를 삭제하는 함수
+exports.deleteUser = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const user = await User.findByIdAndDelete(userId);
+        if (!user) {
+            return res.status(404).send({ message: "User not found" });
+        }
+        res.status(200).send({ message: "User data deleted successfully" });
+    } catch (error) {
+        res.status(500).send({ message: "Failed to delete user data", error: error.message });
+    }
+};
