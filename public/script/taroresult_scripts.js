@@ -161,20 +161,20 @@ document.getElementById("restart-button").addEventListener("click", function() {
     window.location.href = "start.html";  // 시작 페이지로 이동
 });
 
-// "저장" 버튼
+// "저장" 버튼 클릭 이벤트 리스너 등록
 document.getElementById("save-button").addEventListener("click", function() {
-    saveImage();  // 이미지 저장 함수 호출
+    saveImage();  // saveImage 함수 호출
 });
 
 // 이미지 저장 함수
 function saveImage() {
-    const container = document.querySelector(".container");  // 컨테이너 요소 가져오기
-    html2canvas(container).then(canvas => {  // 컨테이너 요소를 캔버스로 변환
-        const image = canvas.toDataURL("image/png");  // 이미지 URL 생성
+    const container = document.querySelector(".container");  // .container 요소 가져오기
+    html2canvas(container).then(canvas => {  // container 요소를 캔버스로 변환
+        const image = canvas.toDataURL("image/png");  // 캔버스를 PNG 이미지로 변환하여 image 변수에 저장
         const link = document.createElement("a");  // 링크 요소 생성
-        link.href = image;  // 링크 요소에 이미지 URL 설정
-        link.download = "taro_result.png";  // 다운로드 파일 이름 설정
-        link.click();  // 링크 클릭으로 이미지 다운로드
+        link.href = image;  // 링크의 href 속성에 이미지 URL 설정
+        link.download = "taro_result.png";  // 다운로드할 파일 이름 설정
+        link.click();  // 링크 클릭으로 이미지 다운로드 시작
     });
 }
 
